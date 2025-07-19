@@ -45,7 +45,7 @@
             endwhile;
             wp_reset_postdata();
         else :
-            echo '<div class="task-item"><p>No tasks found. Create your first task above!</p></div>';
+            echo '<div class="task-item no-tasks"><p>No tasks found. Create your first task above!</p></div>';
         endif;
         ?>
     </div>

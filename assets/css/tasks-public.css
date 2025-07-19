@@ -169,6 +169,10 @@ h1.task-heading {
     position: relative;
 }
 
+.task-item.no-tasks{
+    padding: 20px;
+    text-align: center;
+}
 .task-item:hover {
     background: #1a1a1a;
 }
