@@ -2,9 +2,11 @@
 /**
  * Register custom post type for tasks
  */
+namespace TasksManager;
+
 class Tasks_Post_Type {
     public function init() {
-        add_action('init', array($this, 'register_post_type'));
+        \add_action('init', array($this, 'register_post_type'));
     }
 
     public function register_post_type() {
@@ -24,6 +26,6 @@ class Tasks_Post_Type {
             'has_archive' => true,
             'rewrite' => array('slug' => 'tasks'),
         );
-        register_post_type('task', $args);
+        \register_post_type('task', $args);
     }
 }

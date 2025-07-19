@@ -2,9 +2,11 @@
 /**
  * Register custom taxonomy for tasks
  */
+namespace TasksManager;
+
 class Tasks_Taxonomy {
     public function init() {
-        add_action('init', array($this, 'register_taxonomy'));
+        \add_action('init', array($this, 'register_taxonomy'));
     }
 
     public function register_taxonomy() {
@@ -26,6 +28,6 @@ class Tasks_Taxonomy {
             'query_var' => true,
             'rewrite' => array('slug' => 'project'),
         );
-        register_taxonomy('project', 'task', $args);
+        \register_taxonomy('project', 'task', $args);
     }
 }

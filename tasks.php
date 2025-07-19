@@ -61,5 +61,25 @@ function tasks_init() {
     $loader->run();
 }
 
+/**
+ * Plugin activation callback
+ */
+function tasks_activate() {
+    // Flush rewrite rules on activation
+    flush_rewrite_rules();
+}
+
+/**
+ * Plugin deactivation callback
+ */
+function tasks_deactivate() {
+    // Flush rewrite rules on deactivation
+    flush_rewrite_rules();
+}
+
 // Initialize the plugin
 add_action('plugins_loaded', 'tasks_init');
+
+// Register activation and deactivation hooks
+register_activation_hook(__FILE__, 'tasks_activate');
+register_deactivation_hook(__FILE__, 'tasks_deactivate');
