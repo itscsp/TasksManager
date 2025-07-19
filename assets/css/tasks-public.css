@@ -1,5 +1,131 @@
+/* Custom Checkbox Styles for Task Completion */
+.custom-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+    position: relative;
+}
+.custom-checkbox-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.custom-checkbox-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--tsk-accent);
+    border-radius: 3px;
+    background: #181818;
+    transition: border-color 0.2s, background 0.2s;
+    box-sizing: border-box;
+}
+.custom-checkbox-label:hover .custom-checkbox-box {
+    border-color: var(--tsk-accent-2);
+}
+.custom-checkbox-check {
+    color: var(--tsk-accent);
+    display: block;
+    width: 22px;
+    height: 22px;
+    animation: checkmarkFadeIn 0.18s ease;
+}
+@keyframes checkmarkFadeIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
+}
+/* Subtask Status Checkbox Styles */
+.subtask-status-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: normal;
+    color: #00aaff;
+    cursor: pointer;
+}
+.subtask-status-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: #00aaff;
+    margin-right: 4px;
+}
+
+.task-item-heading-outer{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.subtask-header{
+    display: flex;
+    justify-content: space-between;
+    gap: 20p;
+    align-items: center;
+}
+/* Accordion Styles */
+.accordion-item {
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+.accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 15px;
+    background: transparent;
+    outline: none;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.accordion-header:hover {
+    background: #222;
+}
+.accordion-icon {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: none;
+    position: relative;
+}
+.accordion-icon::before {
+    content: '';
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-right: 3px solid var(--tsk-accent);
+    border-bottom: 3px solid var(--tsk-accent);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s;
+}
+.accordion-item.open .accordion-icon::before {
+    transform: rotate(-135deg);
+    top: 6px;
+}
+.accordion-content {
+    padding: 0 15px 5px 15px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+}
+.accordion-item.open .accordion-content {
+    max-height: 1000px;
+    opacity: 1;
+    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+}
 :root{
         --tsk-accent: hsl(153, 71%, 59%);
+        --tsk-accent-2: hsl(153, 57%, 41%);
+
         --tsk-black: #000;
         --tsk-white: #fff;
 }
@@ -36,7 +162,6 @@ h1.task-heading {
 
 .task-item {
     border: 1px solid var(--tsk-accent);
-    padding: 20px;
     margin-bottom: 20px;
     background: #111;
     border-radius: 8px;
@@ -50,24 +175,20 @@ h1.task-heading {
 
 
 .task-meta {
-    position: absolute;
-    left: 0;
-    padding: 5px 10px;
-    top: 0;
-    border-bottom: 1px solid var(--tsk-accent);
-    border-right: 1px solid var(--tsk-accent);
-    border-radius: 5px;
+    text-transform: capitalize;
+    padding-top: 10px;
 }
 
 .task-meta * {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 h3.task-item-heading {
     margin-top: 20px;
     font-size: 20px;
     font-weight: 400 !important;
+    margin-bottom: 0;
 }
 
 /* Modal Styles */
@@ -211,9 +332,7 @@ h3.task-item-heading {
 }
 
 .subtasks {
-    margin-top: 20px;
-    padding: 15px;
-    background: #0a0a0a;
+
     border-radius: 5px;
     border: 1px solid #333;
 }
@@ -247,6 +366,17 @@ h3.task-item-heading {
     flex: 1;
 }
 
+.description{
+    font-size: 14px;
+}
+
+.description > p.label{
+    font-size: 12px;
+}
+
+.mb-0{
+    margin-bottom: 0;
+}
 .subtask-actions {
     display: flex;
     gap: 10px;
@@ -404,4 +534,13 @@ h3.task-item-heading {
 
 .tasks-manager-container::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+
+@media (max-width:768px){
+    .today-date {
+
+    margin-bottom: 10px;
+    font-size: 12px;
+}
 }

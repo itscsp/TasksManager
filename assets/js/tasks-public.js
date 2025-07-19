@@ -1,3 +1,30 @@
+jQuery(document).ready(function($) {
+    // Accordion logic for task items
+    $('.accordion-header').on('click keypress', function(e) {
+        // Prevent toggle if click/keypress originated from the status checkbox or its label
+        var $target = $(e.target);
+        if (
+            $target.closest('.status-checkbox-label').length > 0 ||
+            $target.hasClass('status-checkbox')
+        ) {
+            return;
+        }
+        if (e.type === 'click' || (e.type === 'keypress' && (e.which === 13 || e.which === 32))) {
+            var $item = $(this).closest('.accordion-item');
+            if ($item.hasClass('open')) {
+                $item.removeClass('open');
+                $item.find('.accordion-content').slideUp(250);
+            } else {
+                // Close all others
+                $('.accordion-item.open').removeClass('open').find('.accordion-content').slideUp(250);
+                $item.addClass('open');
+                $item.find('.accordion-content').slideDown(350);
+            }
+        }
+    });
+    // Optionally, open the first item by default:
+    // $('.accordion-item').first().addClass('open').find('.accordion-content').show();
+});
 
 jQuery(document).ready(function($) {
     // Modal open/close logic
@@ -108,8 +135,18 @@ jQuery(document).ready(function($) {
         var taskId = $checkbox.data('task-id');
         var newStatus = $checkbox.is(':checked') ? 'completed' : 'todo';
         var statusSpan = $checkbox.closest('.task-item').find('.task-status');
+        var $box = $checkbox.siblings('.custom-checkbox-box');
 
         $checkbox.prop('disabled', true);
+
+        // Toggle checkmark SVG in custom box
+        if ($checkbox.is(':checked')) {
+            if ($box.find('.custom-checkbox-check').length === 0) {
+                $box.html('<svg class="custom-checkbox-check" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M17.47 250.9C88.82 328.1 158 397.6 224.5 485.5c72.3-143.8 146.3-288.1 268.4-444.37L460 26.06C356.9 135.4 276.8 238.9 207.2 361.9c-48.4-43.6-126.62-105.3-174.38-137z"></path></svg>');
+            }
+        } else {
+            $box.empty();
+        }
 
         $.ajax({
             url: tasksAjax.ajaxurl,
@@ -127,13 +164,23 @@ jQuery(document).ready(function($) {
                              .text(newStatus.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()));
                 } else {
                     alert('Error updating task status');
-                    // Revert checkbox
+                    // Revert checkbox and checkmark
                     $checkbox.prop('checked', !$checkbox.is(':checked'));
+                    if ($checkbox.is(':checked')) {
+                        $box.html('<svg class="custom-checkbox-check" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M17.47 250.9C88.82 328.1 158 397.6 224.5 485.5c72.3-143.8 146.3-288.1 268.4-444.37L460 26.06C356.9 135.4 276.8 238.9 207.2 361.9c-48.4-43.6-126.62-105.3-174.38-137z"></path></svg>');
+                    } else {
+                        $box.empty();
+                    }
                 }
             },
             error: function() {
                 alert('Network error occurred while updating status');
                 $checkbox.prop('checked', !$checkbox.is(':checked'));
+                if ($checkbox.is(':checked')) {
+                    $box.html('<svg class="custom-checkbox-check" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="22" width="22" xmlns="http://www.w3.org/2000/svg"><path d="M17.47 250.9C88.82 328.1 158 397.6 224.5 485.5c72.3-143.8 146.3-288.1 268.4-444.37L460 26.06C356.9 135.4 276.8 238.9 207.2 361.9c-48.4-43.6-126.62-105.3-174.38-137z"></path></svg>');
+                } else {
+                    $box.empty();
+                }
             },
             complete: function() {
                 $checkbox.prop('disabled', false);
@@ -141,13 +188,16 @@ jQuery(document).ready(function($) {
         });
     });
 
-    // Handle subtask status changes
-    $('.subtask-status-selector').on('change', function() {
-        var taskId = $(this).data('task-id');
-        var subtaskIndex = $(this).data('subtask-index');
-        var newStatus = $(this).val();
-        var statusSpan = $(this).closest('.subtask-item').find('.task-status');
-        
+    // Handle subtask status checkbox
+    $('.subtask-status-checkbox').on('change', function() {
+        var $checkbox = $(this);
+        var taskId = $checkbox.data('task-id');
+        var subtaskIndex = $checkbox.data('subtask-index');
+        var newStatus = $checkbox.is(':checked') ? 'completed' : 'todo';
+        var statusSpan = $checkbox.closest('.subtask-item').find('.task-status');
+
+        $checkbox.prop('disabled', true);
+
         $.ajax({
             url: tasksAjax.ajaxurl,
             type: 'POST',
@@ -160,16 +210,20 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 if (response.success) {
-                    // Update status display
                     statusSpan.removeClass('todo in-progress completed')
                              .addClass(newStatus)
                              .text(newStatus.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()));
                 } else {
                     alert('Error updating subtask status');
+                    $checkbox.prop('checked', !$checkbox.is(':checked'));
                 }
             },
             error: function() {
                 alert('Network error occurred while updating subtask status');
+                $checkbox.prop('checked', !$checkbox.is(':checked'));
+            },
+            complete: function() {
+                $checkbox.prop('disabled', false);
             }
         });
     });
