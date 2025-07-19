@@ -1,0 +1,40 @@
+.tasks-manager-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.task-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #fff;
+}
+
+.add-task-form {
+    background: #f5f5f5;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.add-task-form input[type="text"],
+.add-task-form textarea,
+.add-task-form select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.subtasks {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.subtasks ul {
+    list-style: none;
+    padding: 0;
+}
+
+.subtasks li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+}

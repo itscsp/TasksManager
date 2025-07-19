@@ -1,0 +1,65 @@
+<?php
+/**
+ * Tasks Manager - WordPress Plugin
+ *
+ * @package     TasksManager
+ * @author      Chethan S Poojary
+ * @copyright   2023 Chethan S Poojary
+ * @license     GPL-2.0+
+ *
+ * @wordpress-plugin
+ * Plugin Name: Tasks Manager
+ * Plugin URI:  https://example.com/tasks-manager
+ * Description: A plugin to manage daily tasks with projects and subtasks
+ * Version:     1.0.0
+ * Author:      Chethan S Poojary
+ * Author URI:  https://example.com
+ * Text Domain: tasks-manager
+ * License:     GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ */
+
+// If this file is called directly, abort.
+if (!defined('ABSPATH')) {
+    die('Direct access is not allowed.');
+}
+
+/**
+ * Define plugin constants
+ */
+define('TASKS_VERSION', '1.0.0');
+define('TASKS_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('TASKS_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('TASKS_BASENAME', plugin_basename(__FILE__));
+
+/**
+ * Include required files
+ */
+$required_files = array(
+    'includes/class-tasks-loader.php',
+    'includes/class-tasks-post-type.php',
+    'includes/class-tasks-taxonomy.php',
+    'admin/class-tasks-admin.php',
+    'public/class-tasks-public.php'
+);
+
+foreach ($required_files as $file) {
+    require_once TASKS_PLUGIN_DIR . $file;
+}
+
+// No meta box code here anymore - it's been moved to admin/class-tasks-meta-boxes.php
+
+/**
+ * Initialize the plugin
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function tasks_init() {
+    // Initialize plugin loader
+    $loader = new Tasks_Loader();
+    $loader->run();
+}
+
+// Initialize the plugin
+add_action('plugins_loaded', 'tasks_init');
