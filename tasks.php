@@ -11,7 +11,7 @@
  * Plugin Name: Tasks Manager
  * Plugin URI:  https://github.com/tasks-manager
  * Description: A plugin to manage daily tasks with projects and subtasks
- * Version:     1.0.0
+ * Version: 1.0.2
  * Author:      Chethan S Poojary
  * Author URI:  https://chethanspoojary.com
  * Text Domain: tasks-manager
