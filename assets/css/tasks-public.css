@@ -1,40 +1,326 @@
+/* Tasks Manager Styles - Black Theme */
 .tasks-manager-container {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 1000px;
+    margin: 20px auto;
+    background: #000;
+    color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.tasks-login-required {
+    background: #000;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+.tasks-login-required a {
+    color: #00aaff;
+    text-decoration: none;
+}
+
+.tasks-login-required a:hover {
+    color: #0088cc;
+    text-decoration: underline;
 }
 
 .task-item {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 15px;
-    background: #fff;
+    border: 1px solid #333;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #111;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.task-item:hover {
+    background: #1a1a1a;
+    border-color: #444;
 }
 
 .add-task-form {
-    background: #f5f5f5;
-    padding: 20px;
+    background: #111;
+    padding: 25px;
     margin-bottom: 30px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.add-task-form h2,
+.tasks-list h2 {
+    color: #00aaff;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
+}
+
+.add-task-form label {
+    color: #ccc;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .add-task-form input[type="text"],
 .add-task-form textarea,
 .add-task-form select {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #333;
+    background: #222;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.add-task-form input[type="text"]:focus,
+.add-task-form textarea:focus,
+.add-task-form select:focus {
+    border-color: #00aaff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 170, 255, 0.3);
+}
+
+.button, .btn {
+    background: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.button:hover, .btn:hover {
+    background: #0088cc;
+}
+
+.button.secondary, .btn.secondary {
+    background: #666;
+}
+
+.button.secondary:hover, .btn.secondary:hover {
+    background: #777;
 }
 
 .subtasks {
-    margin-top: 15px;
-    padding-left: 20px;
+    margin-top: 20px;
+    padding: 15px;
+    background: #0a0a0a;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+.subtasks h4 {
+    color: #00aaff;
+    margin-bottom: 15px;
 }
 
 .subtasks ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .subtasks li {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #1a1a1a;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+.subtask-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subtask-content {
+    flex: 1;
+}
+
+.subtask-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.task-meta {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    color: #ccc;
+}
+
+.task-meta p {
+    margin: 5px 0;
+}
+
+.task-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.task-status.todo {
+    background: #ff6b35;
+    color: #fff;
+}
+
+.task-status.completed {
+    background: #28a745;
+    color: #fff;
+}
+
+.task-status.in-progress {
+    background: #ffc107;
+    color: #000;
+}
+
+.add-subtask-form {
+    margin-top: 15px;
+    padding: 15px;
+    background: #0a0a0a;
+    border-radius: 5px;
+    border: 1px solid #333;
+    display: none;
+}
+
+.add-subtask-form.show {
+    display: block;
+}
+
+.add-subtask-form input,
+.add-subtask-form textarea {
+    width: 100%;
     margin-bottom: 10px;
-    padding: 10px;
-    background: #f9f9f9;
+    padding: 8px;
+    border: 1px solid #333;
+    background: #222;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.task-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.task-actions .btn {
+    padding: 8px 15px;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tasks-manager-container {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .task-actions {
+        flex-direction: column;
+    }
+    
+    .subtask-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .subtask-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* Loading and Animation States */
+.button.loading, .btn.loading {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.task-item.focused {
+    border-color: #00aaff;
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.2);
+}
+
+.add-task-form.focused,
+.add-subtask-form.focused {
+    border-color: #00aaff;
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.2);
+}
+
+/* Progress indicators */
+.task-progress {
+    margin-top: 10px;
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 6px;
+}
+
+.task-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00aaff, #0088cc);
+    transition: width 0.3s ease;
+}
+
+/* Notification styles */
+.task-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+.task-notification.success {
+    background: #28a745;
+}
+
+.task-notification.error {
+    background: #dc3545;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Dark scrollbar for webkit browsers */
+.tasks-manager-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tasks-manager-container::-webkit-scrollbar-track {
+    background: #222;
+}
+
+.tasks-manager-container::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+}
+
+.tasks-manager-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

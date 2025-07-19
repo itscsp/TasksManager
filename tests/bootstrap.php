@@ -11,10 +11,23 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 // Now we need to bootstrap WP Mock
 Brain\Monkey\setUp();
 
-// Include the class files directly (temporary fix)
-require_once dirname(__DIR__) . '/includes/Tasks_Post_Type.php';
-require_once dirname(__DIR__) . '/includes/Tasks_Taxonomy.php';
-require_once dirname(__DIR__) . '/includes/Tasks_Meta_Boxes.php';
+// Define WordPress constants
+if (!defined('TASKS_PLUGIN_DIR')) {
+    define('TASKS_PLUGIN_DIR', dirname(__DIR__) . '/');
+}
+if (!defined('TASKS_PLUGIN_URL')) {
+    define('TASKS_PLUGIN_URL', 'http://blogchethanspoojarycom.local/wp-content/plugins/tasks/');
+}
+if (!defined('TASKS_VERSION')) {
+    define('TASKS_VERSION', '1.0.0');
+}
+
+// Include the class files
+require_once dirname(__DIR__) . '/includes/class-tasks-post-type.php';
+require_once dirname(__DIR__) . '/includes/class-tasks-taxonomy.php';
+require_once dirname(__DIR__) . '/includes/class-tasks-loader.php';
+require_once dirname(__DIR__) . '/admin/class-tasks-admin.php';
+require_once dirname(__DIR__) . '/public/class-tasks-public.php';
 
 // Define WordPress functions that we'll use in tests
 if (!function_exists('plugin_dir_path')) {
@@ -25,7 +38,7 @@ if (!function_exists('plugin_dir_path')) {
 
 if (!function_exists('plugin_dir_url')) {
     function plugin_dir_url($file) {
-        return 'http://example.com/wp-content/plugins/' . basename(dirname($file)) . '/';
+        return 'http://blogchethanspoojarycom.local/wp-content/plugins/' . basename(dirname($file)) . '/';
     }
 }
 

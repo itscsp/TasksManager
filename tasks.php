@@ -4,16 +4,16 @@
  *
  * @package     TasksManager
  * @author      Chethan S Poojary
- * @copyright   2023 Chethan S Poojary
+ * @copyright   2025 Chethan S Poojary
  * @license     GPL-2.0+
  *
  * @wordpress-plugin
  * Plugin Name: Tasks Manager
- * Plugin URI:  https://example.com/tasks-manager
+ * Plugin URI:  https://github.com/tasks-manager
  * Description: A plugin to manage daily tasks with projects and subtasks
  * Version:     1.0.0
  * Author:      Chethan S Poojary
- * Author URI:  https://example.com
+ * Author URI:  https://chethanspoojary.com
  * Text Domain: tasks-manager
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
 /**
  * Define plugin constants
  */
-define('TASKS_VERSION', '1.0.0');
+define('TASKS_VERSION', '1.0.1');
 define('TASKS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('TASKS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('TASKS_BASENAME', plugin_basename(__FILE__));

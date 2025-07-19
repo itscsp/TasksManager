@@ -8,8 +8,11 @@
     verbose="true"
     stopOnFailure="false">
     <testsuites>
-        <testsuite name="Tasks Manager Test Suite">
+        <testsuite name="Tasks Manager Unit Tests">
             <directory suffix="Test.php">./tests/unit</directory>
+        </testsuite>
+        <testsuite name="Tasks Manager Integration Tests">
+            <directory suffix="Test.php">./tests/integration</directory>
         </testsuite>
     </testsuites>
     <coverage>

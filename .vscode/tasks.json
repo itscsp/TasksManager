@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run PHP Unit Tests",
+			"type": "shell",
+			"command": "./vendor/bin/phpunit",
+			"group": "test",
+			"isBackground": false,
+			"problemMatcher": [
+				"$phpunit"
+			]
+		}
+	]
+}
