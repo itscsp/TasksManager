@@ -61,15 +61,15 @@ use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
  * @return void
  */
 function tasks_init() {
-            public function run_plugin() {
-            if (is_admin()) {
-                PucFactory::buildUpdateChecker(
-                    'https://raw.githubusercontent.com/itscsp/TasksManager/main/manifest.json',
-                    __FILE__,
-                    'budget-buddy'
-                );
-            }
-        }
+
+    if (is_admin()) {
+        PucFactory::buildUpdateChecker(
+            'https://raw.githubusercontent.com/itscsp/TasksManager/main/manifest.json',
+            __FILE__,
+            'taskManager'
+        );
+    }
+        
     // Initialize plugin loader
     $loader = new Tasks_Loader();
     $loader->run();
