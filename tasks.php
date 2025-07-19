@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
 /**
  * Define plugin constants
  */
-define('TASKS_VERSION', '1.0.1');
+define('TASKS_VERSION', '1.0.2');
 define('TASKS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('TASKS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('TASKS_BASENAME', plugin_basename(__FILE__));
@@ -48,6 +48,10 @@ foreach ($required_files as $file) {
     require_once TASKS_PLUGIN_DIR . $file;
 }
 
+require_once plugin_dir_path(__FILE__) . 'plugin-update-checker/plugin-update-checker.php';
+
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
 // No meta box code here anymore - it's been moved to admin/class-tasks-meta-boxes.php
 
 /**
@@ -57,6 +61,15 @@ foreach ($required_files as $file) {
  * @return void
  */
 function tasks_init() {
+            public function run_plugin() {
+            if (is_admin()) {
+                PucFactory::buildUpdateChecker(
+                    'https://raw.githubusercontent.com/itscsp/TasksManager/main/manifest.json',
+                    __FILE__,
+                    'budget-buddy'
+                );
+            }
+        }
     // Initialize plugin loader
     $loader = new Tasks_Loader();
     $loader->run();
