@@ -39,6 +39,7 @@ $required_files = array(
     'includes/class-tasks-loader.php',
     'includes/class-tasks-post-type.php',
     'includes/class-tasks-taxonomy.php',
+    'includes/class-tasks-model.php',
     'admin/class-tasks-admin.php',
     'public/class-tasks-public.php'
 );

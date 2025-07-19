@@ -1,3 +1,119 @@
+:root{
+        --tsk-accent: hsl(153, 71%, 59%);
+        --tsk-black: #000;
+        --tsk-white: #fff;
+}
+
+h1.task-heading {
+    font-weight: 400;
+    font-size: 32px;
+    margin: 0;
+}
+
+.add-task-form {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 20px;
+}
+
+
+.today-date{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.today-date div > span{
+    color: var(--tsk-accent);
+}
+
+
+.task-item {
+    border: 1px solid var(--tsk-accent);
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #111;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.task-item:hover {
+    background: #1a1a1a;
+}
+
+
+.task-meta {
+    position: absolute;
+    left: 0;
+    padding: 5px 10px;
+    top: 0;
+    border-bottom: 1px solid var(--tsk-accent);
+    border-right: 1px solid var(--tsk-accent);
+    border-radius: 5px;
+}
+
+.task-meta * {
+    margin: 0;
+    font-size: 14px;
+}
+
+h3.task-item-heading {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 400 !important;
+}
+
+/* Modal Styles */
+.tasks-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.tasks-modal-content {
+    background: #181818;
+    margin: 5% auto;
+    padding: 30px 25px 20px 25px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    color: #fff;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.tasks-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    color: #fff;
+    font-size: 1.7em;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.2s;
+}
+.tasks-modal-close:hover {
+    color: #00aaff;
+}
+
+
 /* Tasks Manager Styles - Black Theme */
 .tasks-manager-container {
     max-width: 1000px;
@@ -28,27 +144,6 @@
     text-decoration: underline;
 }
 
-.task-item {
-    border: 1px solid #333;
-    padding: 20px;
-    margin-bottom: 20px;
-    background: #111;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.task-item:hover {
-    background: #1a1a1a;
-    border-color: #444;
-}
-
-.add-task-form {
-    background: #111;
-    padding: 25px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    border: 1px solid #333;
-}
 
 .add-task-form h2,
 .tasks-list h2 {
@@ -85,19 +180,26 @@
     box-shadow: 0 0 5px rgba(0, 170, 255, 0.3);
 }
 
-.button, .btn {
-    background: #00aaff;
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s ease;
+.tasks-btn {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text1);
+    text-decoration: none;
+    border-left: 0;
+    border-top: none;
+    border-bottom-color: var(--tsk-accent);
+    background: transparent;
+    line-height: 0;
+    padding: 20px 10px;
+    height: auto !important;
 }
 
-.button:hover, .btn:hover {
-    background: #0088cc;
+.tasks-btn:hover{
+    cursor: pointer;
+    background: var(--tsk-accent);
+    color: var(--tsk-black);
 }
 
 .button.secondary, .btn.secondary {
@@ -150,24 +252,8 @@
     gap: 10px;
 }
 
-.task-meta {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #333;
-    color: #ccc;
-}
 
-.task-meta p {
-    margin: 5px 0;
-}
 
-.task-status {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.9em;
-    font-weight: bold;
-}
 
 .task-status.todo {
     background: #ff6b35;
@@ -254,11 +340,6 @@
     box-shadow: 0 0 10px rgba(0, 170, 255, 0.2);
 }
 
-.add-task-form.focused,
-.add-subtask-form.focused {
-    border-color: #00aaff;
-    box-shadow: 0 0 10px rgba(0, 170, 255, 0.2);
-}
 
 /* Progress indicators */
 .task-progress {

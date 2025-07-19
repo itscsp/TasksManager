@@ -47,29 +47,19 @@ class Tasks_Public {
         // Parse form data
         parse_str($_POST['task_data'], $task_data);
 
-        // Create new task post
-        $post_data = array(
-            'post_title' => sanitize_text_field($task_data['task_title']),
-            'post_content' => sanitize_textarea_field($task_data['task_description']),
-            'post_type' => 'task',
-            'post_status' => 'publish',
-            'post_author' => get_current_user_id()
-        );
+        $model = new Tasks_Model();
+        $task_id = $model->add_task([
+            'title' => $task_data['task_title'],
+            'description' => $task_data['task_description'],
+            'status' => $task_data['task_status'],
+            'project' => $task_data['task_project'],
+            'author' => get_current_user_id()
+        ]);
 
-        $post_id = wp_insert_post($post_data);
-
-        if ($post_id) {
-            // Save meta data
-            update_post_meta($post_id, '_task_status', sanitize_text_field($task_data['task_status']));
-            
-            // Set project taxonomy
-            if (!empty($task_data['task_project'])) {
-                wp_set_post_terms($post_id, intval($task_data['task_project']), 'project');
-            }
-
-            wp_send_json_success('Task added successfully');
+        if (is_wp_error($task_id)) {
+            wp_send_json_error($task_id->get_error_message());
         } else {
-            wp_send_json_error('Failed to add task');
+            wp_send_json_success('Task added successfully');
         }
     }
 
@@ -83,26 +73,19 @@ class Tasks_Public {
         }
 
         $task_id = intval($_POST['task_id']);
-        $subtask_title = sanitize_text_field($_POST['subtask_title']);
-        $subtask_description = sanitize_textarea_field($_POST['subtask_description']);
 
-        // Get existing subtasks
-        $subtasks = get_post_meta($task_id, '_task_subtasks', true);
-        if (!is_array($subtasks)) {
-            $subtasks = array();
+        $model = new Tasks_Model();
+        $result = $model->add_subtask($task_id, [
+            'title' => $_POST['subtask_title'],
+            'description' => $_POST['subtask_description'],
+            'status' => 'todo'
+        ]);
+
+        if ($result) {
+            wp_send_json_success('Subtask added successfully');
+        } else {
+            wp_send_json_error('Failed to add subtask');
         }
-
-        // Add new subtask
-        $subtasks[] = array(
-            'title' => $subtask_title,
-            'description' => $subtask_description,
-            'status' => 'todo',
-            'created' => current_time('mysql')
-        );
-
-        update_post_meta($task_id, '_task_subtasks', $subtasks);
-
-        wp_send_json_success('Subtask added successfully');
     }
 
     /**
