@@ -11,9 +11,6 @@
                                   <p><?php echo esc_html($subtask['description']); ?></p>
                               <?php endif; ?>
                               <small>Status: <span class="task-status <?php echo $subtask['status']; ?>"><?php echo ucfirst(str_replace('-', ' ', $subtask['status'])); ?></span></small>
-                              <?php if (!empty($subtask['created'])) : ?>
-                                  <small> | Created: <?php echo date('M j, Y', strtotime($subtask['created'])); ?></small>
-                              <?php endif; ?>
                           </div>
                           <div class="subtask-actions">
                               <select class="subtask-status-selector" data-task-id="<?php echo $task_id; ?>" data-subtask-index="<?php echo $index; ?>">
