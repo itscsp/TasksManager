@@ -33,18 +33,8 @@
             <h4>Add Subtasks</h4>
             <button class="tasks-btn open-add-subtask-modal" data-task-id="<?php echo $task_id; ?>" style="margin-left: auto;">Add</button>
         </div>
-        <!-- Add Subtask Modal -->
-        <div class="tasks-modal add-subtask-modal" id="add-subtask-modal-<?php echo $task_id; ?>" style="display:none;">
-            <div class="tasks-modal-content">
-                <span class="tasks-modal-close close-add-subtask-modal" data-task-id="<?php echo $task_id; ?>">&times;</span>
-                <h4>Add Subtask</h4>
-                <form class="subtask-form" data-task-id="<?php echo $task_id; ?>">
-                    <input type="text" name="subtask_title" placeholder="Subtask Title" required>
-                    <textarea name="subtask_description" placeholder="Subtask Description" rows="2"></textarea>
-                    <button type="submit" class="tasks-btn">Add Subtask</button>
-                </form>
-            </div>
-        </div>
+        <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/sub-task-model.php'; ?>
+        
         <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/subtask-item.php'; ?>
     </div>
 </div>

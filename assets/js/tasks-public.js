@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
-    // Accordion logic for task items
-    $('.accordion-header').on('click keypress', function(e) {
+    // Accordion logic for task items, ignore Archives accordion
+    $('.accordion-header').not('.archives-accordion-header').on('click keypress', function(e) {
         // Prevent toggle if click/keypress originated from the status checkbox or its label
         var $target = $(e.target);
         if (
@@ -10,20 +10,20 @@ jQuery(document).ready(function($) {
             return;
         }
         if (e.type === 'click' || (e.type === 'keypress' && (e.which === 13 || e.which === 32))) {
-            var $item = $(this).closest('.accordion-item');
+            var $item = $(this).closest('.accordion-item').not('.archives-accordion-item');
             if ($item.hasClass('open')) {
                 $item.removeClass('open');
                 $item.find('.accordion-content').slideUp(250);
             } else {
-                // Close all others
-                $('.accordion-item.open').removeClass('open').find('.accordion-content').slideUp(250);
+                // Close all others except archives
+                $('.accordion-item.open').not('.archives-accordion-item').removeClass('open').find('.accordion-content').slideUp(250);
                 $item.addClass('open');
                 $item.find('.accordion-content').slideDown(350);
             }
         }
     });
     // Optionally, open the first item by default:
-    // $('.accordion-item').first().addClass('open').find('.accordion-content').show();
+    // $('.accordion-item').not('.archives-accordion-item').first().addClass('open').find('.accordion-content').show();
 });
 
 jQuery(document).ready(function($) {
