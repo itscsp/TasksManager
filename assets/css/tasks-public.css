@@ -349,7 +349,6 @@ h3.task-item-heading {
     color: var(--tsk-text-muted);
     text-align: center;
     padding: var(--gap-lg);
-    background-color: var(--tsk-background-light);
     border: 1px dashed var(--tsk-border-dashed);
     border-radius: 4px;
 }
