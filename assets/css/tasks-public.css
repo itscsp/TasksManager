@@ -48,6 +48,11 @@
     --spacing-xs: 5px;
     --spacing-sm: 8px;
     --spacing-md: 15px;
+    
+    /* Input Styles */
+    --input-height: 40px;
+    --input-padding: 8px 12px;
+    --input-border-radius: 4px;
     --spacing-lg: 25px;
     --spacing-xl: 100px;
     --archive-margin: 100px;
@@ -666,6 +671,89 @@ select#task_project {
     height: 100%;
     background: linear-gradient(90deg, var(--tsk-blue), #0088cc);
     transition: width 0.3s ease;
+}
+
+/* ========================================
+   FORM INPUTS
+   ======================================== */
+#new-task-form input[type="text"],
+#new-task-form input[type="date"],
+#new-task-form textarea,
+#new-task-form select {
+    width: 100%;
+    padding: var(--input-padding);
+    border: 1px solid var(--tsk-border-light);
+    border-radius: var(--input-border-radius);
+    background-color: var(--tsk-background-dark);
+    color: var(--tsk-white);
+    font-size: var(--desc-fs);
+    line-height: 1.5;
+    transition: border-color 0.2s ease;
+}
+
+#new-task-form input[type="date"] {
+    height: var(--input-height);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+#new-task-form input:focus,
+#new-task-form textarea:focus,
+#new-task-form select:focus {
+    outline: none;
+    border-color: var(--tsk-accent);
+}
+
+#new-task-form label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--tsk-white);
+    font-size: var(--desc-fs);
+}
+
+/* ========================================
+   FUTURE TASKS STYLES
+   ======================================== */
+.future-tasks-accordion-item .accordion-header {
+    background: var(--tsk-background-darker);
+    border-left: 4px solid var(--tsk-accent);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+}
+
+.future-tasks-heading {
+    font-size: var(--heading-fs-xs);
+    margin: 0;
+    color: var(--tsk-white);
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+}
+
+.task-due-date {
+    display: inline-block;
+    margin-left: var(--gap);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--tsk-background-darker);
+    border-radius: 4px;
+    font-size: var(--desc-fs-xs);
+    color: var(--tsk-accent);
+}
+
+.task-due-date.scheduled {
+    background: var(--status-progress);
+    color: var(--tsk-black);
+    font-weight: var(--font-weight-bold);
+}
+
+.future-tasks-content .task-item {
+    border-left: 2px solid var(--tsk-accent);
+    margin-left: 2px;
 }
 
 /* ========================================

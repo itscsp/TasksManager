@@ -33,7 +33,7 @@ $archive_tasks = new WP_Query($archive_args);
 // Display Archives Section in Accordion
 echo '<div class="accordion-item archives-accordion-item archives-section">';
 echo '<div class="accordion-header archives-accordion-header">';
-echo '<h3 class="archives-heading">Archives</h2>';
+echo '<h3 class="archives-heading">Archives</h3>';
 echo '<span class="accordion-icon"></span>';
 echo '</div>';
 echo '<div class="accordion-content">';
@@ -57,7 +57,8 @@ if ($archive_tasks->have_posts()) {
             echo '<div class="date-section">';
             echo '<h3 class="date-heading">' . $formatted_date . '</h3>';
         }
-        // Include the task item
+        // Include the task item with archive mode
+        $show_add_subtask = false; // Disable add subtask button for archive items
         include TASKS_PLUGIN_DIR . 'public/partials/UI/task-item.php';
     }
     if ($current_date !== '') {

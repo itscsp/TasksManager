@@ -13,12 +13,14 @@
 
     <div class="tasks-list">
         <?php
-
+        // Today's tasks
         include TASKS_PLUGIN_DIR . 'public/partials/UI/todays-tasks.php';
 
+        // Archive tasks
         include TASKS_PLUGIN_DIR . 'public/partials/UI/archive-tasks.php';
 
-
+        // Future tasks
+        include TASKS_PLUGIN_DIR . 'public/partials/UI/future-tasks.php';
         ?>
     </div>
 </div>

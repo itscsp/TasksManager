@@ -10,12 +10,16 @@ class Tasks_Model {
      * @return int|WP_Error Post ID on success, WP_Error on failure
      */
     public function add_task($data) {
+        $task_date = isset($data['date']) ? sanitize_text_field($data['date']) . ' 00:00:00' : current_time('mysql');
+        $current_time = current_time('mysql');
+        
         $post_data = array(
             'post_title'   => sanitize_text_field($data['title']),
             'post_content' => sanitize_textarea_field($data['description']),
             'post_type'    => 'task',
-            'post_status'  => 'publish',
-            'post_author'  => intval($data['author'])
+            'post_status'  => strtotime($task_date) > strtotime($current_time) ? 'future' : 'publish',
+            'post_author'  => intval($data['author']),
+            'post_date'    => $task_date
         );
         $post_id = wp_insert_post($post_data);
         if (is_wp_error($post_id) || !$post_id) {

@@ -54,9 +54,10 @@ class Tasks_Public {
         $task_id = $model->add_task([
             'title' => $task_data['task_title'],
             'description' => $task_data['task_description'],
-            'status' => $task_data['task_status'],
+            'status' => isset($task_data['task_status']) ? $task_data['task_status'] : 'todo',
             'project' => $task_data['task_project'],
-            'author' => get_current_user_id()
+            'author' => get_current_user_id(),
+            'date' => $task_data['task_date']
         ]);
 
         if (is_wp_error($task_id)) {

@@ -29,11 +29,13 @@
             </p>
         </div>
         </div>
-        <div class="subtask-header">
-            <h4>Add Subtasks</h4>
-            <button class="tasks-btn open-add-subtask-modal" data-task-id="<?php echo $task_id; ?>" style="margin-left: auto;">Add</button>
-        </div>
-        <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/sub-task-model.php'; ?>
+        <?php if (!isset($show_add_subtask) || $show_add_subtask !== false): ?>
+            <div class="subtask-header">
+                <h4>Add Subtasks</h4>
+                <button class="tasks-btn open-add-subtask-modal" data-task-id="<?php echo $task_id; ?>" style="margin-left: auto;">Add</button>
+            </div>
+            <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/sub-task-model.php'; ?>
+        <?php endif; ?>
         
         <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/subtask-item.php'; ?>
     </div>

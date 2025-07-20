@@ -11,7 +11,7 @@
                               <?php endif; ?>
                               <div class="subtask-actions-container">
                                   <small>Status: <span class="task-status <?php echo $subtask['status']; ?>"><?php echo ucfirst(str_replace('-', ' ', $subtask['status'])); ?></span></small>
-
+  <?php if (!isset($show_add_subtask) || $show_add_subtask !== false): ?>
                                    <div class="subtask-actions">
                               <label class="custom-checkbox">
                                   <input type="checkbox" 
@@ -25,6 +25,7 @@
                                   </svg>
                               </label>
                           </div>
+                          <?php endif; ?>
                                 </div>
                           </div>
                       </li>

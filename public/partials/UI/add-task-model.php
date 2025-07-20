@@ -14,6 +14,10 @@
                     <label for="task_description">Description:</label>
                     <textarea id="task_description" name="task_description" rows="4"></textarea>
                 </p>
+                <p>
+                    <label for="task_date">Task Date:</label>
+                    <input type="date" id="task_date" name="task_date" min="<?php echo date('Y-m-d'); ?>" required>
+                </p>
                 <div class="new-task-btns">
                     <p class="tsk-projects">
                         <?php

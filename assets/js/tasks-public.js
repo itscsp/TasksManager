@@ -1,25 +1,55 @@
 jQuery(document).ready(function($) {
-    // Accordion logic for task items, ignore Archives accordion
-    $('.accordion-header').not('.archives-accordion-header').on('click keypress', function(e) {
-        // Prevent toggle if click/keypress originated from the status checkbox or its label
-        var $target = $(e.target);
-        if (
-            $target.closest('.status-checkbox-label').length > 0 ||
-            $target.hasClass('status-checkbox')
-        ) {
+    // Handle Today's Tasks Accordion
+    $('.accordion-header:not(.archives-accordion-header):not(.future-tasks-accordion-header)').on('click keypress', function(e) {
+        if (e.type !== 'click' && (e.type !== 'keypress' || (e.which !== 13 && e.which !== 32))) {
             return;
         }
-        if (e.type === 'click' || (e.type === 'keypress' && (e.which === 13 || e.which === 32))) {
-            var $item = $(this).closest('.accordion-item').not('.archives-accordion-item');
-            if ($item.hasClass('open')) {
-                $item.removeClass('open');
-                $item.find('.accordion-content').slideUp(250);
-            } else {
-                // Close all others except archives
-                $('.accordion-item.open').not('.archives-accordion-item').removeClass('open').find('.accordion-content').slideUp(250);
-                $item.addClass('open');
-                $item.find('.accordion-content').slideDown(350);
-            }
+
+        var $target = $(e.target);
+        if ($target.closest('.status-checkbox-label').length > 0 || $target.hasClass('status-checkbox')) {
+            return;
+        }
+
+        var $item = $(this).closest('.accordion-item');
+        var wasOpen = $item.hasClass('open');
+
+        // Close all regular task accordions
+        $('.accordion-item:not(.archives-accordion-item):not(.future-tasks-accordion-item).open')
+            .removeClass('open')
+            .find('.accordion-content')
+            .slideUp(250);
+
+        if (!wasOpen) {
+            $item.addClass('open')
+                .find('.accordion-content')
+                .slideDown(350);
+        }
+    });
+
+    // Handle Future Tasks Accordion
+    $('.future-tasks-accordion-header').on('click keypress', function(e) {
+        if (e.type !== 'click' && (e.type !== 'keypress' || (e.which !== 13 && e.which !== 32))) {
+            return;
+        }
+
+        var $target = $(e.target);
+        if ($target.closest('.status-checkbox-label').length > 0 || $target.hasClass('status-checkbox')) {
+            return;
+        }
+
+        var $item = $(this).closest('.future-tasks-accordion-item');
+        var wasOpen = $item.hasClass('open');
+
+        // Close other accordions except archives
+        $('.accordion-item.open:not(.archives-accordion-item)')
+            .removeClass('open')
+            .find('.accordion-content')
+            .slideUp(250);
+
+        if (!wasOpen) {
+            $item.addClass('open')
+                .find('.accordion-content')
+                .slideDown(350);
         }
     });
     // Optionally, open the first item by default:
