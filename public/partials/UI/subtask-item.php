@@ -1,7 +1,6 @@
       <!-- Subtasks List -->
       <?php if (!empty($subtasks)) : ?>
           <div class="subtasks">
-              <h4>Subtasks (<?php echo count($subtasks); ?>):</h4>
               <ul>
                   <?php foreach ($subtasks as $index => $subtask) : ?>
                       <li class="subtask-item">
@@ -10,14 +9,23 @@
                               <?php if (!empty($subtask['description'])) : ?>
                                   <p><?php echo esc_html($subtask['description']); ?></p>
                               <?php endif; ?>
-                              <small>Status: <span class="task-status <?php echo $subtask['status']; ?>"><?php echo ucfirst(str_replace('-', ' ', $subtask['status'])); ?></span></small>
+                              <div class="subtask-actions-container">
+                                  <small>Status: <span class="task-status <?php echo $subtask['status']; ?>"><?php echo ucfirst(str_replace('-', ' ', $subtask['status'])); ?></span></small>
+
+                                   <div class="subtask-actions">
+                              <label class="custom-checkbox">
+                                  <input type="checkbox" 
+                                         class="subtask-status-checkbox" 
+                                         data-task-id="<?php echo $task_id; ?>" 
+                                         data-subtask-index="<?php echo $index; ?>"
+                                         <?php echo ($subtask['status'] === 'completed') ? 'checked' : ''; ?>>
+                                         
+                                  <svg class="custom-checkbox-check" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="18" width="18" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M17.47 250.9C88.82 328.1 158 397.6 224.5 485.5c72.3-143.8 146.3-288.1 268.4-444.37L460 26.06C356.9 135.4 276.8 238.9 207.2 361.9c-48.4-43.6-126.62-105.3-174.38-137z"></path>
+                                  </svg>
+                              </label>
                           </div>
-                          <div class="subtask-actions">
-                              <select class="subtask-status-selector" data-task-id="<?php echo $task_id; ?>" data-subtask-index="<?php echo $index; ?>">
-                                  <option value="todo" <?php selected($subtask['status'], 'todo'); ?>>Todo</option>
-                                  <option value="in-progress" <?php selected($subtask['status'], 'in-progress'); ?>>In Progress</option>
-                                  <option value="completed" <?php selected($subtask['status'], 'completed'); ?>>Completed</option>
-                              </select>
+                                </div>
                           </div>
                       </li>
                   <?php endforeach; ?>

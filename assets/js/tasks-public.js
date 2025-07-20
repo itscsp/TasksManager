@@ -191,16 +191,16 @@ jQuery(document).ready(function($) {
 
 
     // Handle subtask status change (admin and frontend)
-    $(document).on('change', 'select[name="subtask_status[]"], .subtask-status-selector', function() {
-        var $select = $(this);
-        var newStatus = $select.val();
-        var $subtaskItem = $select.closest('.subtask-item');
+    $(document).on('change', '.subtask-status-checkbox', function() {
+        var $checkbox = $(this);
+        var newStatus = $checkbox.is(':checked') ? 'completed' : 'todo';
+        var $subtaskItem = $checkbox.closest('.subtask-item');
         var statusSpan = $subtaskItem.find('.task-status');
         // For admin meta box
-        var subtaskIndex = $select.data('subtask-index') !== undefined ? $select.data('subtask-index') : $subtaskItem.index();
-        var taskId = $select.data('task-id') || $subtaskItem.data('task-id');
+        var subtaskIndex = $checkbox.data('subtask-index') !== undefined ? $checkbox.data('subtask-index') : $subtaskItem.index();
+        var taskId = $checkbox.data('task-id') || $subtaskItem.data('task-id');
 
-        $select.prop('disabled', true);
+        $checkbox.prop('disabled', true);
 
         $.ajax({
             url: tasksAjax.ajaxurl,
@@ -216,18 +216,22 @@ jQuery(document).ready(function($) {
                 if (response.success) {
                     if (statusSpan.length) {
                         statusSpan.removeClass('todo in-progress completed')
-                                  .addClass(newStatus)
-                                  .text(newStatus.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()));
+                                .addClass(newStatus)
+                                .text(newStatus.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()));
                     }
                 } else {
                     alert('Error updating subtask status');
+                    // Revert checkbox state if there's an error
+                    $checkbox.prop('checked', !$checkbox.is(':checked'));
                 }
             },
             error: function() {
                 alert('Network error occurred while updating subtask status');
+                // Revert checkbox state on error
+                $checkbox.prop('checked', !$checkbox.is(':checked'));
             },
             complete: function() {
-                $select.prop('disabled', false);
+                $checkbox.prop('disabled', false);
             }
         });
     });
