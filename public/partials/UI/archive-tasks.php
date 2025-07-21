@@ -59,6 +59,7 @@ if ($archive_tasks->have_posts()) {
         }
         // Include the task item with archive mode
         $show_add_subtask = false; // Disable add subtask button for archive items
+        $show_sheduled_task = false;
         include TASKS_PLUGIN_DIR . 'public/partials/UI/task-item.php';
     }
     if ($current_date !== '') {

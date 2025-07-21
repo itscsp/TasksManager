@@ -37,7 +37,7 @@
                 $status = $status ? $status : 'todo';
                 $subtasks = get_post_meta($task_id, '_task_subtasks', true);
                 $subtasks = is_array($subtasks) ? $subtasks : array();
-                
+                $show_sheduled_task = false;
                 include TASKS_PLUGIN_DIR . 'public/partials/UI/task-item.php';
             }
         } else {

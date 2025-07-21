@@ -19,15 +19,23 @@
     </div>
     <div class="inner-container accordion-content" style="display: none;">
         <div class="task-content">
-        <div class="task-meta">
-            <p>project: <?php echo get_the_term_list($task_id, 'project', '', ', '); ?></p>
-        </div>
-        <div class="description">
-            <p class="mb-0 label">Description: </p>
-            <p>
-                <?php the_content(); ?>
-            </p>
-        </div>
+            <div class="task-meta">
+                <p>
+                <?php if (!isset($show_sheduled_task) || $show_sheduled_task === true): ?>
+                    <span class="task-due-date <?php echo get_post_status() === 'future' ? 'scheduled' : ''; ?>">
+                        <?php echo get_post_status() === 'future' ? 'Scheduled for: ' : 'Due: '; ?>
+                        <?php echo $task_date; ?>
+                    </span>
+                <?php endif; ?>
+                </p>
+                <p>project: <?php echo get_the_term_list($task_id, 'project', '', ', '); ?></p>
+            </div>
+            <div class="description">
+                <p class="mb-0 label">Description: </p>
+                <p>
+                    <?php the_content(); ?>
+                </p>
+            </div>
         </div>
         <?php if (!isset($show_add_subtask) || $show_add_subtask !== false): ?>
             <div class="subtask-header">
@@ -36,7 +44,7 @@
             </div>
             <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/sub-task-model.php'; ?>
         <?php endif; ?>
-        
+
         <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/subtask-item.php'; ?>
     </div>
 </div>

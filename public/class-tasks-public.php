@@ -15,11 +15,17 @@ class Tasks_Public {
     }
 
     public function enqueue_scripts() {
+        wp_enqueue_style('tasks-flatpickr-css', TASKS_PLUGIN_URL . 'assets/library/flatpickr/flatpickr.min.css', array(), TASKS_VERSION);
+        // wp_enqueue_style('tasks-flatpickr-custom', TASKS_PLUGIN_URL . 'assets/css/tasks-flatpickr.css', array('tasks-flatpickr-css'), TASKS_VERSION);
+        wp_enqueue_script('tasks-flatpickr-js', TASKS_PLUGIN_URL . 'assets/library/flatpickr/flatpickr.js', array('jquery'), TASKS_VERSION, true);
+
         wp_enqueue_style('tasks-public', TASKS_PLUGIN_URL . 'assets/css/tasks-public.css', array(), TASKS_VERSION);
         wp_enqueue_style('tasks-public-model', TASKS_PLUGIN_URL . 'assets/css/tasks-model.css', array(), TASKS_VERSION);
 
         wp_enqueue_script('tasks-public', TASKS_PLUGIN_URL . 'assets/js/tasks-public.js', array('jquery'), TASKS_VERSION, true);
         wp_enqueue_script('tasks-archive-accordion', TASKS_PLUGIN_URL . 'assets/js/tasks-archive-accordion.js', array('jquery'), TASKS_VERSION, true);
+        wp_enqueue_script('tasks-archive-accordion', TASKS_PLUGIN_URL . 'assets/js/tasks-archive-accordion.js', array('jquery'), TASKS_VERSION, true);
+
 
         wp_localize_script('tasks-public', 'tasksAjax', array(
             'ajaxurl' => admin_url('admin-ajax.php'),

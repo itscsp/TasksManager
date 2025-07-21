@@ -276,7 +276,7 @@ h3.task-item-heading {
 }
 
 .accordion-content {
-    padding: 0 var(--spacing-md) var(--spacing-xs) var(--spacing-md);
+    padding: 0 var(--spacing-md) var(--spacing-xs) var(--spacing-sm);
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -684,7 +684,6 @@ select#task_project {
     padding: var(--input-padding);
     border: 1px solid var(--tsk-border-light);
     border-radius: var(--input-border-radius);
-    background-color: var(--tsk-background-dark);
     color: var(--tsk-white);
     font-size: var(--desc-fs);
     line-height: 1.5;
@@ -720,8 +719,6 @@ select#task_project {
    FUTURE TASKS STYLES
    ======================================== */
 .future-tasks-accordion-item .accordion-header {
-    background: var(--tsk-background-darker);
-    border-left: 4px solid var(--tsk-accent);
     padding: var(--spacing-md);
     border-radius: var(--border-radius);
 }
@@ -737,7 +734,7 @@ select#task_project {
 
 .task-due-date {
     display: inline-block;
-    margin-left: var(--gap);
+    margin-bottom: var(--gap);
     padding: var(--spacing-xs) var(--spacing-sm);
     background: var(--tsk-background-darker);
     border-radius: 4px;
@@ -751,9 +748,8 @@ select#task_project {
     font-weight: var(--font-weight-bold);
 }
 
-.future-tasks-content .task-item {
-    border-left: 2px solid var(--tsk-accent);
-    margin-left: 2px;
+.accordion-content.future-tasks-content {
+    margin-top: 10px;
 }
 
 /* ========================================
