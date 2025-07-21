@@ -22,5 +22,5 @@
 /* Make sure calendar fits in modal */
 .flatpickr-calendar {
     max-width: 100%;
-    background: #fff;
+    background: #fff; 
 }

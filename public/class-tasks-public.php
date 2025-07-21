@@ -16,7 +16,7 @@ class Tasks_Public {
 
     public function enqueue_scripts() {
         wp_enqueue_style('tasks-flatpickr-css', TASKS_PLUGIN_URL . 'assets/library/flatpickr/flatpickr.min.css', array(), TASKS_VERSION);
-        // wp_enqueue_style('tasks-flatpickr-custom', TASKS_PLUGIN_URL . 'assets/css/tasks-flatpickr.css', array('tasks-flatpickr-css'), TASKS_VERSION);
+        wp_enqueue_style('tasks-flatpickr-custom', TASKS_PLUGIN_URL . 'assets/css/tasks-flatpickr.css', array('tasks-flatpickr-css'), TASKS_VERSION);
         wp_enqueue_script('tasks-flatpickr-js', TASKS_PLUGIN_URL . 'assets/library/flatpickr/flatpickr.js', array('jquery'), TASKS_VERSION, true);
 
         wp_enqueue_style('tasks-public', TASKS_PLUGIN_URL . 'assets/css/tasks-public.css', array(), TASKS_VERSION);
