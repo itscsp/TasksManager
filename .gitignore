@@ -1,1 +1,48 @@
+# Dependencies
 /vendor
+/node_modules
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+
+# Testing and Coverage
+/coverage
+/tests/coverage
+*.log
+.phpunit.result.cache
+
+# Build outputs
+/dist
+/build
+*.zip
+
+# Composer
+composer.phar
+
+# WordPress specific
+*.pot~
+*.po~
+*.mo~
+.sass-cache/
+*.css.map
+*.js.map
+
+# Development specific
+/debug.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.phpcs.cache
