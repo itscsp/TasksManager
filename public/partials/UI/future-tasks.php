@@ -20,27 +20,27 @@ if ($future_tasks->have_posts()) : ?>
     <div class="accordion-item future-tasks-accordion-item">
         <div class="accordion-header future-tasks-accordion-header">
             <h3 class="future-tasks-heading">Future Tasks <span class="task-count">(<?php echo $future_tasks->found_posts; ?>)</span></h3>
-<span class="accordion-icon">
+            <span class="accordion-icon">
 
-</span>
+            </span>
         </div>
         <div class="accordion-content future-tasks-content">
-                <?php while ($future_tasks->have_posts()) : $future_tasks->the_post(); 
-                    $task_id = get_the_ID();
-                    $task_status = get_post_meta($task_id, '_task_status', true);
-                    $task_date = get_the_date('F j, Y');
-                    $subtasks = get_post_meta($task_id, '_task_subtasks', true);
+            <?php while ($future_tasks->have_posts()) : $future_tasks->the_post();
+                $task_id = get_the_ID();
+                $status = get_post_meta($task_id, '_task_status', true);
+                $status = $status ? $status : 'todo';
+                $task_date = get_the_date('F j, Y');
+                $subtasks = get_post_meta($task_id, '_task_subtasks', true);
+                $subtasks = is_array($subtasks) ? $subtasks : array();
+            ?>
+                <?php
+                $show_add_subtask = true; // Enable add subtask button for future tasks
+                $show_sheduled_task = true;
+                include TASKS_PLUGIN_DIR . 'public/partials/UI/task-item.php';
+
                 ?>
-                        <?php 
-                        $show_add_subtask = true; // Enable add subtask button for future tasks
-                        $show_sheduled_task = true;
-                        include TASKS_PLUGIN_DIR . 'public/partials/UI/task-item.php';
-                        if (!empty($subtasks)) {
-                            include TASKS_PLUGIN_DIR . 'public/partials/UI/subtask-item.php';
-                        }
-                        ?>
-                    </li>
-                <?php endwhile; ?>
+                </li>
+            <?php endwhile; ?>
             </ul>
         </div>
     </div>

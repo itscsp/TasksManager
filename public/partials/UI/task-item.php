@@ -46,5 +46,30 @@
         <?php endif; ?>
 
         <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/subtask-item.php'; ?>
+
+        <!-- Set up and display comments -->
+        <?php
+        // Setup comment arguments
+        global $wp_query;
+        $task_comments = get_comments(array(
+            'post_id' => $task_id,
+            'order' => 'DESC'
+        ));
+        
+        // Temporarily modify the global comment query
+        $temp_comments = $wp_query->comments;
+        $temp_comment_count = $wp_query->comment_count;
+        
+        $wp_query->comments = $task_comments;
+        $wp_query->comment_count = count($task_comments);
+        
+        // Include the comments template
+        include TASKS_PLUGIN_DIR . 'public/partials/UI/comments.php';
+        
+        // Restore the original comment query
+        $wp_query->comments = $temp_comments;
+        $wp_query->comment_count = $temp_comment_count;
+        ?>
+
     </div>
 </div>

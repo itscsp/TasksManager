@@ -12,6 +12,7 @@ class Tasks_Public {
         add_action('wp_ajax_add_subtask', array($this, 'handle_add_subtask'));
         add_action('wp_ajax_update_task_status', array($this, 'handle_update_task_status'));
         add_action('wp_ajax_update_subtask_status', array($this, 'handle_update_subtask_status'));
+        add_action('wp_ajax_add_task_comment', array($this, 'handle_add_comment'));
     }
 
     public function enqueue_scripts() {
@@ -21,10 +22,11 @@ class Tasks_Public {
 
         wp_enqueue_style('tasks-public', TASKS_PLUGIN_URL . 'assets/css/tasks-public.css', array(), TASKS_VERSION);
         wp_enqueue_style('tasks-public-model', TASKS_PLUGIN_URL . 'assets/css/tasks-model.css', array(), TASKS_VERSION);
+        wp_enqueue_style('tasks-comments', TASKS_PLUGIN_URL . 'assets/css/tasks-comments.css', array(), TASKS_VERSION);
 
         wp_enqueue_script('tasks-public', TASKS_PLUGIN_URL . 'assets/js/tasks-public.js', array('jquery'), TASKS_VERSION, true);
         wp_enqueue_script('tasks-archive-accordion', TASKS_PLUGIN_URL . 'assets/js/tasks-archive-accordion.js', array('jquery'), TASKS_VERSION, true);
-        wp_enqueue_script('tasks-archive-accordion', TASKS_PLUGIN_URL . 'assets/js/tasks-archive-accordion.js', array('jquery'), TASKS_VERSION, true);
+        wp_enqueue_script('tasks-comments', TASKS_PLUGIN_URL . 'assets/js/tasks-comments.js', array('jquery'), TASKS_VERSION, true);
 
 
         wp_localize_script('tasks-public', 'tasksAjax', array(
@@ -60,7 +62,7 @@ class Tasks_Public {
         $task_id = $model->add_task([
             'title' => $task_data['task_title'],
             'description' => $task_data['task_description'],
-            'status' => isset($task_data['task_status']) ? $task_data['task_status'] : 'todo',
+            'status' => 'todo',
             'project' => $task_data['task_project'],
             'author' => get_current_user_id(),
             'date' => $task_data['task_date']
@@ -118,6 +120,51 @@ class Tasks_Public {
     /**
      * Handle AJAX request to update subtask status
      */
+    /**
+     * Handle AJAX comment submission
+     */
+    public function handle_add_comment() {
+        check_ajax_referer('tasks_ajax_nonce', 'nonce');
+        
+        if (!is_user_logged_in()) {
+            wp_send_json_error('You must be logged in to comment');
+        }
+
+        $task_id = intval($_POST['task_id']);
+        $comment_content = wp_kses_post($_POST['comment']);
+        $user = wp_get_current_user();
+
+        $comment_data = array(
+            'comment_post_ID' => $task_id,
+            'comment_content' => $comment_content,
+            'user_id' => $user->ID,
+            'comment_author' => $user->display_name,
+            'comment_author_email' => $user->user_email,
+            'comment_type' => 'comment',
+            'comment_parent' => isset($_POST['comment_parent']) ? intval($_POST['comment_parent']) : 0,
+        );
+
+        $comment_id = wp_insert_comment($comment_data);
+
+        if ($comment_id) {
+            $comment = get_comment($comment_id);
+            $response = array(
+                'id' => $comment_id,
+                'content' => apply_filters('comment_text', $comment->comment_content),
+                'author' => $comment->comment_author,
+                'date' => sprintf(
+                    _x('%s ago', '%s = human-readable time difference', 'tasks'),
+                    human_time_diff(strtotime($comment->comment_date_gmt))
+                ),
+                'avatar' => get_avatar_url($comment->user_id, array('size' => 32)),
+                'parent' => $comment->comment_parent
+            );
+            wp_send_json_success($response);
+        } else {
+            wp_send_json_error('Failed to add comment');
+        }
+    }
+
     public function handle_update_subtask_status() {
         // Verify nonce and user permissions
         if (!wp_verify_nonce($_POST['nonce'], 'tasks_ajax_nonce') || !is_user_logged_in()) {
