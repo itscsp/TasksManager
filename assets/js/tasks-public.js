@@ -1,16 +1,30 @@
 jQuery(document).ready(function($) {
     // Initialize flatpickr
     if (typeof flatpickr !== 'undefined') {
-        flatpickr("#task_date", {
+        var $modal = document.getElementById('add-task-modal');
+        flatpickr("#task_start_date", {
             dateFormat: "Y-m-d",
             minDate: "today",
             disableMobile: false,
             allowInput: true,
-            appendTo: document.getElementById('add-task-modal'),
-            defaultHour: 0, // Set default hour to midnight (00:00)
-            enableTime: false, // Disable time selection
+            appendTo: $modal,
+            defaultHour: 0,
+            enableTime: false,
             onChange: function(selectedDates, dateStr, instance) {
-                // Ensure the date is set to midnight in local timezone
+                if (selectedDates[0]) {
+                    selectedDates[0].setHours(0, 0, 0, 0);
+                }
+            }
+        });
+        flatpickr("#task_end_date", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            disableMobile: false,
+            allowInput: true,
+            appendTo: $modal,
+            defaultHour: 0,
+            enableTime: false,
+            onChange: function(selectedDates, dateStr, instance) {
                 if (selectedDates[0]) {
                     selectedDates[0].setHours(0, 0, 0, 0);
                 }

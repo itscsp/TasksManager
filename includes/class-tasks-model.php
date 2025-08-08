@@ -19,19 +19,16 @@ class Tasks_Model {
      * @return int|WP_Error Post ID on success, WP_Error on failure
      */
     public function add_task($data) {
-        // If date is set, ensure it's at midnight of that day
-        if (isset($data['date'])) {
-            // Convert to site's timezone
-            $timezone = new DateTimeZone(get_option('timezone_string') ?: 'UTC');
-            $date = new DateTime($data['date'], $timezone);
-            $date->setTime(0, 0, 0); // Set to midnight
-            $task_date = $date->format('Y-m-d H:i:s');
-        } else {
-            $task_date = current_time('mysql');
-        }
-        
-        $current_time = current_time('mysql');
-        
+        // Handle start and end dates
+        $timezone = new DateTimeZone(get_option('timezone_string') ?: 'UTC');
+        $now = new DateTime('now', $timezone);
+        $start_date = isset($data['start_date']) ? new DateTime($data['start_date'], $timezone) : clone $now;
+        $end_date = isset($data['end_date']) ? new DateTime($data['end_date'], $timezone) : clone $start_date;
+        $start_date->setTime(0, 0, 0);
+        $end_date->setTime(23, 59, 59);
+        $task_date = $start_date->format('Y-m-d H:i:s');
+        $current_time = $now->format('Y-m-d H:i:s');
+
         $post_data = array(
             'post_title'   => sanitize_text_field($data['title']),
             'post_content' => sanitize_textarea_field($data['description']),
@@ -39,13 +36,15 @@ class Tasks_Model {
             'post_status'  => strtotime($task_date) > strtotime($current_time) ? 'future' : 'publish',
             'post_author'  => intval($data['author']),
             'post_date'    => $task_date,
-            'post_date_gmt' => get_gmt_from_date($task_date) // Ensure GMT time is set correctly
+            'post_date_gmt' => get_gmt_from_date($task_date)
         );
         $post_id = wp_insert_post($post_data);
         if (is_wp_error($post_id) || !$post_id) {
             return new WP_Error('task_create_failed', 'Failed to create task');
         }
         update_post_meta($post_id, '_task_status', sanitize_text_field($data['status']));
+        update_post_meta($post_id, '_task_start_date', $start_date->format('Y-m-d'));
+        update_post_meta($post_id, '_task_end_date', $end_date->format('Y-m-d'));
         if (!empty($data['project'])) {
             wp_set_post_terms($post_id, intval($data['project']), 'project');
         }

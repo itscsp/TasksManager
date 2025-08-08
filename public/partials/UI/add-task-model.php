@@ -15,8 +15,12 @@
                     <textarea id="task_description" name="task_description" rows="4"></textarea>
                 </p>
                 <p>
-                    <label for="task_date">Task Date:</label>
-                    <input type="text" id="task_date" name="task_date" placeholder="Select date" required>
+                    <label for="task_start_date">Start Date:</label>
+                    <input type="text" id="task_start_date" name="task_start_date" placeholder="Select start date" required>
+                </p>
+                <p>
+                    <label for="task_end_date">End Date:</label>
+                    <input type="text" id="task_end_date" name="task_end_date" placeholder="Select end date" required>
                 </p>
                 <div class="new-task-btns">
                     <p class="tsk-projects">

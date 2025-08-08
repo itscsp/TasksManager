@@ -21,12 +21,22 @@
         <div class="task-content">
             <div class="task-meta">
                 <p>
-                <?php if (!isset($show_sheduled_task) || $show_sheduled_task === true): ?>
-                    <span class="task-due-date <?php echo get_post_status() === 'future' ? 'scheduled' : ''; ?>">
+                <?php
+                $start_date = get_post_meta($task_id, '_task_start_date', true);
+                $end_date = get_post_meta($task_id, '_task_end_date', true);
+                ?>
+                <span class="task-due-date <?php echo get_post_status() === 'future' ? 'scheduled' : ''; ?>">
+                    <?php if ($start_date && $end_date): ?>
+                        Active: <?php echo esc_html($start_date); ?> to <?php echo esc_html($end_date); ?>
+                    <?php elseif ($start_date): ?>
+                        Starts: <?php echo esc_html($start_date); ?>
+                    <?php elseif ($end_date): ?>
+                        Ends: <?php echo esc_html($end_date); ?>
+                    <?php else: ?>
                         <?php echo get_post_status() === 'future' ? 'Scheduled for: ' : 'Due: '; ?>
                         <?php echo $task_date; ?>
-                    </span>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </span>
                 </p>
                 <p>project: <?php echo get_the_term_list($task_id, 'project', '', ', '); ?></p>
             </div>

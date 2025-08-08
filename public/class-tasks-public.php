@@ -65,7 +65,8 @@ class Tasks_Public {
             'status' => 'todo',
             'project' => $task_data['task_project'],
             'author' => get_current_user_id(),
-            'date' => $task_data['task_date']
+            'start_date' => $task_data['task_start_date'],
+            'end_date' => $task_data['task_end_date']
         ]);
 
         if (is_wp_error($task_id)) {
