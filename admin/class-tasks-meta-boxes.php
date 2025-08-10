@@ -59,6 +59,33 @@ class Tasks_Meta_Boxes {
             'normal',
             'high'
         );
+
+        // Add Task Dates meta box
+        add_meta_box(
+            'task_dates',
+            __('Task Dates', 'tasks-manager'),
+            array($this, 'render_dates_meta_box'),
+            'task',
+            'side',
+            'default'
+        );
+    }
+    /**
+     * Render dates meta box
+     */
+    public function render_dates_meta_box($post) {
+        $start = get_post_meta($post->ID, '_task_start_date', true);
+        $end = get_post_meta($post->ID, '_task_end_date', true);
+        ?>
+        <p>
+            <label for="task_start_date"><strong><?php _e('Start Date:', 'tasks-manager'); ?></strong></label><br>
+            <input type="date" id="task_start_date" name="task_start_date" value="<?php echo esc_attr($start); ?>">
+        </p>
+        <p>
+            <label for="task_end_date"><strong><?php _e('End Date:', 'tasks-manager'); ?></strong></label><br>
+            <input type="date" id="task_end_date" name="task_end_date" value="<?php echo esc_attr($end); ?>">
+        </p>
+        <?php
     }
 
     /**
@@ -106,6 +133,14 @@ class Tasks_Meta_Boxes {
                 '_task_status',
                 sanitize_text_field($_POST['task_status'])
             );
+        }
+
+        // Save start and end dates
+        if (isset($_POST['task_start_date'])) {
+            update_post_meta($post_id, '_task_start_date', sanitize_text_field($_POST['task_start_date']));
+        }
+        if (isset($_POST['task_end_date'])) {
+            update_post_meta($post_id, '_task_end_date', sanitize_text_field($_POST['task_end_date']));
         }
 
         // Save subtasks

@@ -1,26 +1,35 @@
 <?php
 
         // Get today's tasks
+        $today = date('Y-m-d');
         $today_args = array(
             'post_type' => 'task',
             'posts_per_page' => -1,
             'author' => get_current_user_id(),
-            'date_query' => array(
-                array(
-                    'year' => date('Y'),
-                    'month' => date('m'),
-                    'day' => date('d')
-                )
-            ),
             'meta_query' => array(
-                'relation' => 'OR',
+                'relation' => 'AND',
                 array(
-                    'key' => '_task_status',
-                    'compare' => 'EXISTS'
+                    'key'     => '_task_start_date',
+                    'value'   => $today,
+                    'compare' => '<=',
+                    'type'    => 'DATE'
                 ),
                 array(
-                    'key' => '_task_status',
-                    'compare' => 'NOT EXISTS'
+                    'key'     => '_task_end_date',
+                    'value'   => $today,
+                    'compare' => '>=',
+                    'type'    => 'DATE'
+                ),
+                array(
+                    'relation' => 'OR',
+                    array(
+                        'key' => '_task_status',
+                        'compare' => 'EXISTS'
+                    ),
+                    array(
+                        'key' => '_task_status',
+                        'compare' => 'NOT EXISTS'
+                    )
                 )
             )
         );
