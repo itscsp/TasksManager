@@ -1,33 +1,28 @@
 <?php
 
 // Get archived tasks (older than today)
+$today = date('Y-m-d');
 $archive_args = array(
     'post_type' => 'task',
     'posts_per_page' => -1,
     'author' => get_current_user_id(),
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'date_query' => array(
-        array(
-            'before' => array(
-                'year' => date('Y'),
-                'month' => date('m'),
-                'day' => date('d')
-            )
-        )
-    ),
     'meta_query' => array(
         'relation' => 'OR',
+        // Tasks with end date before today
         array(
-            'key' => '_task_status',
-            'compare' => 'EXISTS'
+            'key'     => '_task_end_date',
+            'value'   => $today,
+            'compare' => '<',
+            'type'    => 'DATE'
         ),
+        // Tasks with no end date, use post_date
         array(
-            'key' => '_task_status',
-            'compare' => 'NOT EXISTS'
+            'key'     => '_task_end_date',
+            'compare' => 'NOT EXISTS',
         )
     )
 );
+
 $archive_tasks = new WP_Query($archive_args);
 
 // Display Archives Section in Accordion
