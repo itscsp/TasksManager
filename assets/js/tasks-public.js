@@ -67,31 +67,35 @@ jQuery(document).ready(function($) {
     });
 
     // Handle Future Tasks Accordion
-    $('.future-tasks-accordion-header').on('click keypress', function(e) {
-        if (e.type !== 'click' && (e.type !== 'keypress' || (e.which !== 13 && e.which !== 32))) {
-            return;
-        }
+        $('.future-tasks-accordion-header').on('click keypress', function(e) {
+            if (e.type !== 'click' && (e.type !== 'keypress' || (e.which !== 13 && e.which !== 32))) {
+                return;
+            }
 
-        var $target = $(e.target);
-        if ($target.closest('.status-checkbox-label').length > 0 || $target.hasClass('status-checkbox')) {
-            return;
-        }
+            var $target = $(e.target);
+            if ($target.closest('.status-checkbox-label').length > 0 || $target.hasClass('status-checkbox')) {
+                return;
+            }
 
-        var $item = $(this).closest('.future-tasks-accordion-item');
-        var wasOpen = $item.hasClass('open');
+            var $item = $(this).closest('.future-tasks-accordion-item');
+            var wasOpen = $item.hasClass('open');
 
-        // Close other accordions except archives
-        $('.accordion-item.open:not(.archives-accordion-item)')
-            .removeClass('open')
-            .find('.accordion-content')
-            .slideUp(250);
+            // Only close other open future tasks accordions, not all accordions
+            $('.future-tasks-accordion-item.open').not($item)
+                .removeClass('open')
+                .find('> .accordion-content')
+                .slideUp(250);
 
-        if (!wasOpen) {
-            $item.addClass('open')
-                .find('.accordion-content')
-                .slideDown(350);
-        }
-    });
+            if (!wasOpen) {
+                $item.addClass('open')
+                    .find('> .accordion-content')
+                    .slideDown(350);
+            } else {
+                $item.removeClass('open')
+                    .find('> .accordion-content')
+                    .slideUp(250);
+            }
+        });
     // Optionally, open the first item by default:
     // $('.accordion-item').not('.archives-accordion-item').first().addClass('open').find('.accordion-content').show();
 });

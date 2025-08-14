@@ -9,9 +9,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<div class="task-comments-section">
-    <h4 class="comments-heading">Comments</h4>
-    
+<div class="task-comments-section">  
     <?php if (comments_open()): ?>
         <div class="task-comment-form">
             <form class="comment-form ajax-comment-form" data-task-id="<?php echo get_the_ID(); ?>">
