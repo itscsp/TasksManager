@@ -208,7 +208,13 @@ jQuery(document).ready(function($) {
         var $checkbox = $(this);
         var taskId = $checkbox.data('task-id');
         var newStatus = $checkbox.is(':checked') ? 'completed' : 'todo';
-        var statusSpan = $checkbox.closest('.task-item').find('.task-status');
+        // Only target the main task status, not subtask statuses inside the same task item
+        var statusSpan = $checkbox.closest('.task-item')
+                                  .find('.task-status')
+                                  .filter(function() {
+                                      return $(this).closest('.subtask-item').length === 0;
+                                  })
+                                  .first();
         var $box = $checkbox.siblings('.custom-checkbox-box');
 
         $checkbox.prop('disabled', true);
