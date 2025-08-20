@@ -6,6 +6,7 @@ $archive_args = array(
     'post_type' => 'task',
     'posts_per_page' => -1,
     'author' => get_current_user_id(),
+    'post_status' => array('private', 'publish'), // Include both private and any legacy published tasks
     'meta_query' => array(
         'relation' => 'OR',
         // Tasks with end date before today

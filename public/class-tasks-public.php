@@ -86,6 +86,12 @@ class Tasks_Public {
         }
 
         $task_id = intval($_POST['task_id']);
+        
+        // Check if user owns this task
+        $task_author = get_post_field('post_author', $task_id);
+        if ($task_author != get_current_user_id()) {
+            wp_die('Permission denied: You can only modify your own tasks');
+        }
 
         $model = new Tasks_Model();
         $result = $model->add_subtask($task_id, [
@@ -112,6 +118,12 @@ class Tasks_Public {
 
         $task_id = intval($_POST['task_id']);
         $status = sanitize_text_field($_POST['status']);
+        
+        // Check if user owns this task
+        $task_author = get_post_field('post_author', $task_id);
+        if ($task_author != get_current_user_id()) {
+            wp_die('Permission denied: You can only modify your own tasks');
+        }
 
         update_post_meta($task_id, '_task_status', $status);
 
@@ -132,6 +144,13 @@ class Tasks_Public {
         }
 
         $task_id = intval($_POST['task_id']);
+        
+        // Check if user owns this task or if task allows commenting by current user
+        $task_author = get_post_field('post_author', $task_id);
+        if ($task_author != get_current_user_id()) {
+            wp_send_json_error('Permission denied: You can only comment on your own tasks');
+        }
+        
         $comment_content = wp_kses_post($_POST['comment']);
         $user = wp_get_current_user();
 
@@ -175,6 +194,12 @@ class Tasks_Public {
         $task_id = intval($_POST['task_id']);
         $subtask_index = intval($_POST['subtask_index']);
         $status = sanitize_text_field($_POST['status']);
+        
+        // Check if user owns this task
+        $task_author = get_post_field('post_author', $task_id);
+        if ($task_author != get_current_user_id()) {
+            wp_die('Permission denied: You can only modify your own tasks');
+        }
 
         // Get existing subtasks
         $subtasks = get_post_meta($task_id, '_task_subtasks', true);

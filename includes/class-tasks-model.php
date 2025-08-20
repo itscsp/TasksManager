@@ -33,7 +33,7 @@ class Tasks_Model {
             'post_title'   => sanitize_text_field($data['title']),
             'post_content' => sanitize_textarea_field($data['description']),
             'post_type'    => 'task',
-            'post_status'  => strtotime($task_date) > strtotime($current_time) ? 'future' : 'publish',
+            'post_status'  => 'private', // All tasks are now private for enhanced privacy
             'post_author'  => intval($data['author']),
             'post_date'    => $task_date,
             'post_date_gmt' => get_gmt_from_date($task_date)

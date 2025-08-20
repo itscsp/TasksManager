@@ -21,10 +21,18 @@ class Tasks_Post_Type {
                 'search_items' => 'Search Tasks',
             ),
             'public' => true,
-            'supports' => array('title', 'editor', 'comments'),
+            'supports' => array('title', 'editor', 'comments', 'author'),
             'menu_icon' => 'dashicons-clipboard',
             'has_archive' => true,
             'rewrite' => array('slug' => 'tasks'),
+            'capability_type' => 'post',
+            'capabilities' => array(
+                'read_private_posts' => 'read_private_tasks',
+                'edit_others_posts' => 'edit_others_tasks',
+                'delete_others_posts' => 'delete_others_tasks',
+                'read_others_posts' => 'read_others_tasks',
+            ),
+            'map_meta_cap' => true,
         );
         \register_post_type('task', $args);
     }

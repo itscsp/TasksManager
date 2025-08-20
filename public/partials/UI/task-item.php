@@ -24,8 +24,9 @@
                 <?php
                 $start_date = get_post_meta($task_id, '_task_start_date', true);
                 $end_date = get_post_meta($task_id, '_task_end_date', true);
+                $is_future_task = (get_post_status() === 'future' || get_post_status() === 'private') && strtotime(get_the_date('Y-m-d')) > time();
                 ?>
-                <span class="task-due-date <?php echo get_post_status() === 'future' ? 'scheduled' : ''; ?>">
+                <span class="task-due-date <?php echo $is_future_task ? 'scheduled' : ''; ?>">
                     <?php if ($start_date && $end_date): ?>
                         Active: <?php echo esc_html($start_date); ?> to <?php echo esc_html($end_date); ?>
                     <?php elseif ($start_date): ?>
@@ -33,7 +34,7 @@
                     <?php elseif ($end_date): ?>
                         Ends: <?php echo esc_html($end_date); ?>
                     <?php else: ?>
-                        <?php echo get_post_status() === 'future' ? 'Scheduled for: ' : 'Due: '; ?>
+                        <?php echo $is_future_task ? 'Scheduled for: ' : 'Due: '; ?>
                         <?php echo $task_date; ?>
                     <?php endif; ?>
                 </span>

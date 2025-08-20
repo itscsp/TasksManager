@@ -3,7 +3,8 @@
 $future_tasks_args = array(
     'post_type' => 'task',
     'posts_per_page' => -1,
-    'post_status' => array('future'),
+    'author' => get_current_user_id(), // Only show tasks created by current user
+    'post_status' => array('private', 'future'), // Include both private future tasks and any legacy future tasks
     'date_query' => array(
         array(
             'after' => date('Y-m-d H:i:s'),

@@ -51,6 +51,8 @@ if (!defined('ABSPATH')) {
         $args = array(
             'post_type' => 'task',
             'posts_per_page' => -1,
+            'author' => get_current_user_id(), // Only show tasks created by current user
+            'post_status' => array('private', 'publish'), // Include both private and any legacy published tasks
         );
         $tasks = new WP_Query($args);
 

@@ -41,7 +41,7 @@ $required_files = array(
     'includes/class-tasks-taxonomy.php',
     'includes/class-tasks-model.php',
     'admin/class-tasks-admin.php',
-    'public/class-tasks-public.php'
+    'public/class-tasks-public.php',
 );
 
 
@@ -82,6 +82,34 @@ function tasks_init() {
     $loader = new Tasks_Loader();
     $loader->run();
 }
+
+/**
+ * Remove "Private:" prefix from private task titles
+ */
+function tasks_remove_private_title_prefix($title, $post_id = null) {
+    // Only apply to task post type
+    if (get_post_type($post_id) === 'task') {
+        // Remove "Private:" and "Protected:" prefixes
+        $title = preg_replace('/^(Private|Protected):\s*/', '', $title);
+    }
+    return $title;
+}
+
+/**
+ * Customize private title format for tasks to remove "Private:" prefix
+ */
+function tasks_private_title_format($format, $post) {
+    if ($post && $post->post_type === 'task') {
+        // Return just '%s' instead of 'Private: %s'
+        return '%s';
+    }
+    return $format;
+}
+
+// Hook the functions to remove private prefix from titles
+add_filter('the_title', 'tasks_remove_private_title_prefix', 10, 2);
+add_filter('get_the_title', 'tasks_remove_private_title_prefix', 10, 2);
+add_filter('private_title_format', 'tasks_private_title_format', 10, 2);
 
 /**
  * Plugin activation callback
