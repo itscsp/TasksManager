@@ -1057,6 +1057,32 @@ form.subtask-form textarea:focus {
     font-size: 1.1em;
 }
 
+/* Remove default list styles from comment-list */
+.comment-list {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.comment-list li {
+    list-style: none !important;
+    list-style-type: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    position: relative;
+}
+
+.comment-list li::before,
+.comment-list li::after {
+    display: none !important;
+    content: none !important;
+}
+
 .comment {
     background: var(--tsk-background-darker);
     padding: 12px;
@@ -1069,11 +1095,60 @@ form.subtask-form textarea:focus {
     font-size: 0.85em;
     color: var(--tsk-text-muted);
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-author {
+    font-size: 14px;
+    color: var(--accent);
+}
+
+.comment-metadata {
+    font-size: 12px;
+}
+
+.comment-meta  img.avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--accent);
+}
+
+article.comment-body {
+    border-radius: 0;
+    overflow: hidden;
+    border-bottom: 0.5px soli var(--accent);
+    padding: 5px 10px;
+    margin-bottom: 14px;
 }
 
 .comment-content {
     color: var(--tsk-white);
     line-height: 1.4;
+    font-size: var();
+}
+
+.comment-content *:last-child {
+    margin: 0;
+}
+
+.comment-content * {
+    font-size: 14px;
+    color: var(--tsk-white);
+}
+
+.comment-content a {
+    color: var(--tsk-accent);
+    text-decoration: underline;
+    text-decoration-color: var(--tsk-accent);
+    text-underline-offset: 2px;
+    transition: all 0.2s ease;
+}
+
+.comment-content a:hover {
+    color: var(--tsk-accent-2);
+    text-decoration-color: var(--tsk-accent-2);
 }
 
 .comment-form {

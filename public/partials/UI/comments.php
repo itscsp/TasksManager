@@ -39,19 +39,25 @@ if (!defined('ABSPATH')) {
                         <li id="comment-<?php comment_ID(); ?>" <?php comment_class('task-comment'); ?>>
                             <article class="comment-body">
                                 <div class="comment-meta">
-                                    <?php echo get_avatar($comment, 32); ?>
-                                    <div class="comment-author">
-                                        <?php echo get_comment_author_link(); ?>
+                                    <div>
+
+                                        <?php echo get_avatar($comment, 32); ?>
                                     </div>
-                                    <div class="comment-metadata">
-                                        <time datetime="<?php echo get_comment_date('c'); ?>">
-                                            <?php
-                                            echo sprintf(
-                                                _x('%s ago', '%s = human-readable time difference', 'tasks'),
-                                                human_time_diff(get_comment_time('U'), current_time('timestamp'))
-                                            );
-                                            ?>
-                                        </time>
+                                    <div>
+
+                                        <div class="comment-author">
+                                            <?php echo get_comment_author_link(); ?>
+                                        </div>
+                                        <div class="comment-metadata">
+                                            <time datetime="<?php echo get_comment_date('c'); ?>">
+                                                <?php
+                                                echo sprintf(
+                                                    _x('%s ago', '%s = human-readable time difference', 'tasks'),
+                                                    human_time_diff(get_comment_time('U'), current_time('timestamp'))
+                                                );
+                                                ?>
+                                            </time>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="comment-content">
