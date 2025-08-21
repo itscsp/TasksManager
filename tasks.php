@@ -11,7 +11,7 @@
  * Plugin Name: Tasks Manager
  * Plugin URI:  https://github.com/tasks-manager
  * Description: A plugin to manage daily tasks with projects and subtasks
- * Version: 1.1.6
+ * Version: 1.1.7
  * Author:      Chethan S Poojary
  * Author URI:  https://chethanspoojary.com
  * Text Domain: tasks-manager
@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
 /**
  * Define plugin constants
  */
-define('TASKS_VERSION', '1.1.6');
+define('TASKS_VERSION', '1.1.7');
 define('TASKS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('TASKS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('TASKS_BASENAME', plugin_basename(__FILE__));
@@ -69,15 +69,7 @@ use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
  * @return void
  */
 function tasks_init() {
-
-    if (is_admin()) {
-        PucFactory::buildUpdateChecker(
-            'https://raw.githubusercontent.com/itscsp/TasksManager/main/manifest.json',
-            __FILE__,
-            'taskManager'
-        );
-    }
-        
+    
     // Initialize plugin loader
     $loader = new Tasks_Loader();
     $loader->run();
