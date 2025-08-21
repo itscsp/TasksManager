@@ -47,7 +47,7 @@
     --gap-xl: 30px;
     --spacing-xs: 5px;
     --spacing-sm: 8px;
-    --spacing-md: 15px;
+    --spacing-md: 7.5px;
     
     /* Input Styles */
     --input-height: 40px;
@@ -347,6 +347,10 @@ h3.task-item-heading {
 .task-meta * {
     margin: 0;
     font-size: var(--desc-fs-xs);
+}
+
+.description p {
+    font-size: 16px;
 }
 
 .no-tasks {
@@ -742,6 +746,20 @@ select#task_project {
     color: var(--tsk-accent);
 }
 
+.project-text{
+     color: var(--tsk-accent) !important;
+}
+
+.task-project {
+    display: inline-block;
+    margin-bottom: var(--gap);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--tsk-background-darker);
+    border-radius: 4px;
+    font-size: var(--desc-fs-xs);
+    color: var(--tsk-accent);
+}
+
 .task-due-date.scheduled {
     background: var(--status-progress);
     color: var(--tsk-black);
@@ -767,15 +785,29 @@ select#task_project {
     font-size: 0.9em;
 }
 
+/* Small edit button styles */
+.task-edit-small {
+    color: var(--tsk-accent) !important;
+    text-decoration: none;
+    font-size: var(--desc-fs-xs);
+    font-weight: normal;
+    margin-left: auto;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.task-edit-small:hover {
+    background-color: var(--tsk-gray-darker);
+    text-decoration: none;
+}
+
 /* ========================================
    UTILITY CLASSES
    ======================================== */
-.description {
-    font-size: var(--desc-fs-small);
-}
 
 .description > p.label {
-    font-size: var(--desc-fs-xs);
+    font-size: var(--desc-fs-small);
 }
 
 .mb-0 {

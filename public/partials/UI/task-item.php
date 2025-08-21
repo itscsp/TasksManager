@@ -19,27 +19,35 @@
     </div>
     <div class="inner-container accordion-content" style="display: none;">
         <div class="task-content">
+            <?php
+            $start_date = get_post_meta($task_id, '_task_start_date', true);
+            $end_date = get_post_meta($task_id, '_task_end_date', true);
+            $is_future_task = (get_post_status() === 'future' || get_post_status() === 'private') && strtotime(get_the_date('Y-m-d')) > time();
+            ?>
             <div class="task-meta">
-                <p>
-                <?php
-                $start_date = get_post_meta($task_id, '_task_start_date', true);
-                $end_date = get_post_meta($task_id, '_task_end_date', true);
-                $is_future_task = (get_post_status() === 'future' || get_post_status() === 'private') && strtotime(get_the_date('Y-m-d')) > time();
-                ?>
-                <span class="task-due-date <?php echo $is_future_task ? 'scheduled' : ''; ?>">
-                    <?php if ($start_date && $end_date): ?>
-                        Active: <?php echo esc_html($start_date); ?> to <?php echo esc_html($end_date); ?>
-                    <?php elseif ($start_date): ?>
-                        Starts: <?php echo esc_html($start_date); ?>
-                    <?php elseif ($end_date): ?>
-                        Ends: <?php echo esc_html($end_date); ?>
-                    <?php else: ?>
-                        <?php echo $is_future_task ? 'Scheduled for: ' : 'Due: '; ?>
-                        <?php echo $task_date; ?>
-                    <?php endif; ?>
-                </span>
+                <p style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <span style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <?php 
+                        $project_terms = get_the_terms($task_id, 'project');
+                        if ($project_terms && !is_wp_error($project_terms)): 
+                        ?>
+                            <span class="task-project">project: <span class="project-text"><?php echo get_the_term_list($task_id, 'project', '', ', '); ?></span></span>
+                        <?php endif; ?>
+                        <span class="task-due-date <?php echo $is_future_task ? 'scheduled' : ''; ?>">
+                            <?php if ($start_date && $end_date): ?>
+                                Active: <?php echo esc_html($start_date); ?> to <?php echo esc_html($end_date); ?>
+                            <?php elseif ($start_date): ?>
+                                Starts: <?php echo esc_html($start_date); ?>
+                            <?php elseif ($end_date): ?>
+                                Ends: <?php echo esc_html($end_date); ?>
+                            <?php else: ?>
+                                <?php echo $is_future_task ? 'Scheduled for: ' : 'Due: '; ?>
+                                <?php echo $task_date; ?>
+                            <?php endif; ?>
+                        </span>
+                    </span>
+                    <a href="<?php echo get_edit_post_link($task_id); ?>" class="task-edit-small" target="_blank" rel="noopener noreferrer">Edit</a>
                 </p>
-                <p>project: <?php echo get_the_term_list($task_id, 'project', '', ', '); ?></p>
             </div>
             <div class="description">
                 <p class="mb-0 label">Description: </p>
@@ -51,7 +59,9 @@
         <?php if (!isset($show_add_subtask) || $show_add_subtask !== false): ?>
             <div class="subtask-header">
                 <h4>Add Subtasks</h4>
-                <button class="tasks-btn open-add-subtask-modal" data-task-id="<?php echo $task_id; ?>" style="margin-left: auto;">Add</button>
+                <div style="display: flex; gap: 10px; margin-left: auto;">
+                    <button class="tasks-btn open-add-subtask-modal" data-task-id="<?php echo $task_id; ?>">Add</button>
+                </div>
             </div>
             <?php include TASKS_PLUGIN_DIR . 'public/partials/UI/sub-task-model.php'; ?>
         <?php endif; ?>
