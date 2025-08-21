@@ -1,38 +1,70 @@
 jQuery(document).ready(function($) {
     // Initialize flatpickr
     if (typeof flatpickr !== 'undefined') {
-        var $modal = document.getElementById('add-task-modal');
-        flatpickr("#task_start_date", {
+        // Initialize date pickers with better configuration
+        const datePickerConfig = {
             dateFormat: "Y-m-d",
             minDate: "today",
             disableMobile: false,
             allowInput: true,
-            appendTo: $modal,
+            clickOpens: true,
+            position: "auto center",
+            positionElement: undefined, // Let flatpickr handle positioning
+            static: false,
             defaultHour: 0,
             enableTime: false,
+            appendTo: document.body, // Append to body for better positioning
             onChange: function(selectedDates, dateStr, instance) {
                 if (selectedDates[0]) {
                     selectedDates[0].setHours(0, 0, 0, 0);
                 }
+            },
+            onOpen: function(selectedDates, dateStr, instance) {
+                // Prevent modal from closing when date picker opens
+                instance.calendarContainer.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+                // Ensure proper z-index
+                instance.calendarContainer.style.zIndex = '10000';
+            },
+            onReady: function(selectedDates, dateStr, instance) {
+                // Add class to calendar for custom styling
+                instance.calendarContainer.classList.add('tasks-datepicker');
             }
-        });
-        flatpickr("#task_end_date", {
-            dateFormat: "Y-m-d",
-            minDate: "today",
-            disableMobile: false,
-            allowInput: true,
-            appendTo: $modal,
-            defaultHour: 0,
-            enableTime: false,
-            onChange: function(selectedDates, dateStr, instance) {
-                if (selectedDates[0]) {
-                    selectedDates[0].setHours(0, 0, 0, 0);
-                }
-            }
-        });
+        };
+
+        // Initialize start date picker
+        if (document.getElementById('task_start_date')) {
+            flatpickr("#task_start_date", datePickerConfig);
+        }
+
+        // Initialize end date picker
+        if (document.getElementById('task_end_date')) {
+            flatpickr("#task_end_date", datePickerConfig);
+        }
+
+        // Initialize regular task date picker if exists
+        if (document.getElementById('task_date')) {
+            flatpickr("#task_date", datePickerConfig);
+        }
     } else {
         console.error('Flatpickr is not loaded');
     }
+
+    // Global click handler to prevent modal closing when interacting with flatpickr
+    $(document).on('click', '.flatpickr-calendar, .flatpickr-calendar *', function(e) {
+        e.stopPropagation();
+    });
+
+    // Prevent modal close on ESC when flatpickr is open
+    $(document).on('keydown', function(e) {
+        if (e.key === 'Escape') {
+            var openPickers = document.querySelectorAll('.flatpickr-calendar.open');
+            if (openPickers.length > 0) {
+                e.stopPropagation();
+            }
+        }
+    });
 });
 
  
@@ -119,6 +151,10 @@ jQuery(document).ready(function($) {
     });
     // Close modal on overlay click
     $('#add-task-modal').on('click', function(e) {
+        // Don't close modal if clicking on flatpickr calendar
+        if ($(e.target).closest('.flatpickr-calendar').length > 0) {
+            return;
+        }
         if (e.target === this) closeModal(this);
     });
 
@@ -132,6 +168,10 @@ jQuery(document).ready(function($) {
         closeModal('#add-subtask-modal-' + taskId);
     });
     $('.add-subtask-modal').on('click', function(e) {
+        // Don't close modal if clicking on flatpickr calendar
+        if ($(e.target).closest('.flatpickr-calendar').length > 0) {
+            return;
+        }
         if (e.target === this) closeModal(this);
     });
 

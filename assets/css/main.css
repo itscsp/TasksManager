@@ -1,8 +1,5 @@
-/* ========================================
-   ROOT VARIABLES
-   ======================================== */
 :root {
-    /* Colors */
+    /* Core Colors */
     --tsk-accent: hsl(153, 71%, 59%);
     --tsk-accent-2: hsl(153, 57%, 41%);
     --tsk-black: #000;
@@ -20,7 +17,6 @@
     --tsk-text-secondary: #555;
     --tsk-border-light: #e0e0e0;
     --tsk-border-dashed: #ccc;
-    --tsk-background-light: #f9f9f9;
     
     /* Status Colors */
     --status-todo: #ff6b35;
@@ -31,11 +27,8 @@
     /* Typography */
     --heading-fs: 20px;
     --heading-fs-large: 32px;
-    --heading-fs-medium: 1.5em;
-    --heading-fs-small: 1.2em;
     --heading-fs-xs: 1.1rem;
     --desc-fs: 16px;
-    --desc-fs-small: 14px;
     --desc-fs-xs: 12px;
     --font-weight-normal: 400;
     --font-weight-bold: 700;
@@ -44,21 +37,13 @@
     --gap: 10px;
     --gap-sm: 6px;
     --gap-lg: 20px;
-    --gap-xl: 30px;
     --spacing-xs: 5px;
-    --spacing-sm: 8px;
-    --spacing-md: 7.5px;
-    
-    /* Input Styles */
-    --input-height: 40px;
-    --input-padding: 8px 12px;
-    --input-border-radius: 4px;
+    --spacing-sm: 12px;
+    --spacing-md: 15px;
     --spacing-lg: 25px;
-    --spacing-xl: 100px;
     --archive-margin: 100px;
     
     /* Layout */
-    --input-padding: 15px;
     --border-radius: 8px;
     --input-radius: 5px;
     --container-max-width: 1000px;
@@ -71,12 +56,9 @@
     --progress-bar-height: 6px;
     --scrollbar-width: 8px;
     --notification-z-index: 1000;
-    
-    /* Colors (Legacy - keeping for backward compatibility) */
-    --input-bg: var(--tsk-black);
-    --input-color: var(--tsk-white);
-    --label-color: var(--tsk-gray-light);
-    --label-weight: bold;
+    --input-height: 40px;
+    --input-border-radius: 4px;
+    --input-padding: 8px 12px;
     
     /* Transitions */
     --transition: all 0.3s ease;
@@ -86,38 +68,27 @@
     --transition-slower: 0.45s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* ========================================
-   RESPONSIVE ROOT VARIABLES
-   ======================================== */
 @media (max-width: 768px) {
     :root {
         --heading-fs: 16px;
         --desc-fs: 14px;
         --gap: 6px;
         --gap-lg: 10px;
-        --input-padding: 10px;
         --archive-margin: 50px;
-        --spacing-xl: 50px;
     }
 }
 
-/* ========================================
-   KEYFRAME ANIMATIONS
-   ======================================== */
 @keyframes checkmarkFadeIn {
-    from { 
-        opacity: 0; 
-        transform: scale(0.7); 
-    }
-    to { 
-        opacity: 1; 
-        transform: scale(1); 
-    }
+    from { opacity: 0; transform: scale(0.7); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-/* ========================================
-   MAIN CONTAINER STYLES
-   ======================================== */
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Main Container */
 .tasks-manager-container {
     max-width: var(--container-max-width);
     margin: var(--gap-lg) auto;
@@ -142,9 +113,7 @@
     text-decoration: none;
 }
 
-/* ========================================
-   TYPOGRAPHY
-   ======================================== */
+/* Typography */
 h1.task-heading {
     font-weight: var(--font-weight-normal);
     font-size: var(--heading-fs-large);
@@ -158,9 +127,7 @@ h3.task-item-heading {
     margin-bottom: 0;
 }
 
-/* ========================================
-   SECTION LAYOUTS
-   ======================================== */
+/* Sections */
 .today-section {
     margin-bottom: var(--gap-lg, 30px);
 }
@@ -186,7 +153,7 @@ h3.task-item-heading {
     font-size: var(--heading-fs-xs);
     color: var(--tsk-text-secondary);
     margin-bottom: var(--spacing-md);
-    padding: var(--gap) 0 ;
+    padding: var(--gap) 0;
     background: transparent;
     color: var(--tsk-accent);
     border-radius: 4px;
@@ -210,9 +177,7 @@ h3.task-item-heading {
     color: var(--tsk-accent);
 }
 
-/* ========================================
-   ACCORDION STYLES
-   ======================================== */
+/* Accordion */
 .accordion-item {
     overflow: hidden;
     transition: box-shadow 0.2s;
@@ -223,7 +188,7 @@ h3.task-item-heading {
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     background: transparent;
     outline: none;
     user-select: none;
@@ -263,14 +228,12 @@ h3.task-item-heading {
 }
 
 .accordion-item > .accordion-header > .accordion-icon::before {
-    /* Default: down arrow */
     transform: rotate(45deg);
     top: 3px;
     transition: transform 0.3s, top 0.3s;
 }
 
 .accordion-item.open > .accordion-header > .accordion-icon::before {
-    /* Open: up arrow */
     transform: rotate(-135deg);
     top: 6px;
 }
@@ -289,7 +252,6 @@ h3.task-item-heading {
     transition: max-height var(--transition-slower), opacity var(--transition-medium);
 }
 
-/* Archives accordion specific styles */
 .archives-accordion-item > .accordion-content {
     display: none;
     padding: 0 var(--spacing-md) var(--spacing-xs) var(--spacing-sm);
@@ -307,9 +269,7 @@ h3.task-item-heading {
     display: block;
 }
 
-/* ========================================
-   TASK ITEM STYLES
-   ======================================== */
+/* Task Items */
 .task-item {
     border: 1px solid var(--tsk-accent);
     margin-bottom: var(--gap-lg);
@@ -353,6 +313,10 @@ h3.task-item-heading {
     font-size: 16px;
 }
 
+.description > p.label {
+    font-size: 14px;
+}
+
 .no-tasks {
     font-style: italic;
     color: var(--tsk-text-muted);
@@ -362,9 +326,72 @@ h3.task-item-heading {
     border-radius: 4px;
 }
 
-/* ========================================
-   FORM STYLES
-   ======================================== */
+.project-text {
+    color: var(--tsk-accent) !important;
+}
+
+.task-project {
+    display: inline-block;
+    margin-bottom: var(--gap);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--tsk-background-darker);
+    border-radius: 4px;
+    font-size: var(--desc-fs-xs);
+    color: var(--tsk-accent);
+}
+
+.task-due-date {
+    display: inline-block;
+    margin-bottom: var(--gap);
+    padding: 5px;
+    background: var(--tsk-background-darker);
+    border-radius: 4px;
+    font-size: var(--desc-fs-xs);
+    color: var(--tsk-accent);
+}
+
+.task-due-date.scheduled {
+    background: var(--status-progress);
+    color: var(--tsk-black);
+    font-weight: var(--font-weight-bold);
+}
+
+.task-edit-small {
+    color: var(--tsk-accent) !important;
+    text-decoration: none;
+    font-size: var(--desc-fs-xs);
+    font-weight: normal;
+    margin-left: auto;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+}
+
+.task-edit-small:hover {
+    background-color: var(--tsk-gray-darker);
+    text-decoration: none;
+}
+
+/* Future Tasks */
+.future-tasks-accordion-item .accordion-header {
+    padding: var(--spacing-md) var(--spacing-sm);
+    border-radius: var(--border-radius);
+}
+
+.future-tasks-heading {
+    font-size: var(--heading-fs-xs);
+    margin: 0;
+    color: var(--tsk-white);
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+}
+
+.accordion-content.future-tasks-content {
+    margin-top: 10px;
+}
+
+/* Forms */
 .add-task-form {
     display: flex;
     justify-content: space-between;
@@ -469,24 +496,62 @@ select#task_project {
     border-radius: 4px;
 }
 
-/* ========================================
-   BUTTON STYLES
-   ======================================== */
+#new-task-form input[type="text"],
+#new-task-form input[type="date"],
+#new-task-form textarea,
+#new-task-form select {
+    width: 100%;
+    padding: var(--input-padding);
+    border: 1px solid var(--tsk-border-light);
+    border-radius: var(--input-border-radius);
+    color: var(--tsk-white);
+    font-size: var(--desc-fs);
+    line-height: 1.5;
+    transition: border-color 0.2s ease;
+}
+
+#new-task-form input[type="date"] {
+    height: var(--input-height);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+}
+
+#new-task-form input:focus,
+#new-task-form textarea:focus,
+#new-task-form select:focus {
+    outline: none;
+    border-color: var(--tsk-accent);
+}
+
+#new-task-form label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--tsk-white);
+    font-size: var(--desc-fs);
+}
+
+/* Buttons */
 .tasks-btn {
     display: inline-block;
     font-size: 1rem;
-    font-weight: var(--font-weight-bold);
+    font-weight: 600;
     text-transform: uppercase;
-    color: var(--tsk-white);
+    color: var(--tsk-black);
     text-decoration: none;
-    border-left: 0;
-    border-top: none;
-    border-bottom-color: var(--tsk-accent);
-    background: transparent;
-    line-height: 0;
-    padding: calc(2 * var(--gap)) var(--gap);
+    background: var(--tsk-accent);
+    border: none;
+    border-radius: 4px;
+    line-height: 1.2;
+    padding: 8px 16px;
+    margin-top: 10px;
     height: auto !important;
-    border-right: 0;
+    cursor: pointer;
+    transition: var(--transition-fast);
 }
 
 .tasks-btn:hover {
@@ -508,10 +573,7 @@ select#task_project {
     cursor: not-allowed;
 }
 
-/* ========================================
-   CHECKBOX STYLES
-   ======================================== */
-
+/* Checkboxes */
 .custom-checkbox-label {
     display: flex;
     align-items: center;
@@ -552,7 +614,6 @@ select#task_project {
     animation: checkmarkFadeIn var(--transition-fast);
 }
 
-
 .subtask-actions-container {
     display: flex;
     justify-content: space-between;
@@ -575,11 +636,7 @@ select#task_project {
     margin-right: 4px;
 }
 
-/* ========================================
-   SUBTASK STYLES
-   ======================================== */
-
-
+/* Subtasks */
 .subtasks h4 {
     color: var(--tsk-blue);
     margin-bottom: var(--spacing-md);
@@ -623,6 +680,7 @@ select#task_project {
     gap: var(--gap);
     border: 1px solid var(--tsk-accent);
 }
+
 .subtask-actions .custom-checkbox {
     display: flex;
     align-items: center;
@@ -645,9 +703,7 @@ select#task_project {
     opacity: 1;
 }
 
-/* ========================================
-   STATUS AND PROGRESS STYLES
-   ======================================== */
+/* Status */
 .task-status.todo {
     background: var(--status-todo);
     color: var(--tsk-white);
@@ -677,102 +733,7 @@ select#task_project {
     transition: width 0.3s ease;
 }
 
-/* ========================================
-   FORM INPUTS
-   ======================================== */
-#new-task-form input[type="text"],
-#new-task-form input[type="date"],
-#new-task-form textarea,
-#new-task-form select {
-    width: 100%;
-    padding: var(--input-padding);
-    border: 1px solid var(--tsk-border-light);
-    border-radius: var(--input-border-radius);
-    color: var(--tsk-white);
-    font-size: var(--desc-fs);
-    line-height: 1.5;
-    transition: border-color 0.2s ease;
-}
-
-#new-task-form input[type="date"] {
-    height: var(--input-height);
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 16px;
-}
-
-#new-task-form input:focus,
-#new-task-form textarea:focus,
-#new-task-form select:focus {
-    outline: none;
-    border-color: var(--tsk-accent);
-}
-
-#new-task-form label {
-    display: block;
-    margin-bottom: var(--spacing-xs);
-    color: var(--tsk-white);
-    font-size: var(--desc-fs);
-}
-
-/* ========================================
-   FUTURE TASKS STYLES
-   ======================================== */
-.future-tasks-accordion-item .accordion-header {
-    padding: var(--spacing-md) var(--spacing-sm);
-    border-radius: var(--border-radius);
-}
-
-.future-tasks-heading {
-    font-size: var(--heading-fs-xs);
-    margin: 0;
-    color: var(--tsk-white);
-    display: flex;
-    align-items: center;
-    gap: var(--gap);
-}
-
-.task-due-date {
-    display: inline-block;
-    margin-bottom: var(--gap);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background: var(--tsk-background-darker);
-    border-radius: 4px;
-    font-size: var(--desc-fs-xs);
-    color: var(--tsk-accent);
-}
-
-.project-text{
-     color: var(--tsk-accent) !important;
-}
-
-.task-project {
-    display: inline-block;
-    margin-bottom: var(--gap);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    background: var(--tsk-background-darker);
-    border-radius: 4px;
-    font-size: var(--desc-fs-xs);
-    color: var(--tsk-accent);
-}
-
-.task-due-date.scheduled {
-    background: var(--status-progress);
-    color: var(--tsk-black);
-    font-weight: var(--font-weight-bold);
-}
-
-.accordion-content.future-tasks-content {
-    margin-top: 10px;
-}
-
-/* ========================================
-   TASK ACTIONS
-   ======================================== */
+/* Task Actions */
 .task-actions {
     margin-top: var(--spacing-md);
     display: flex;
@@ -785,38 +746,12 @@ select#task_project {
     font-size: 0.9em;
 }
 
-/* Small edit button styles */
-.task-edit-small {
-    color: var(--tsk-accent) !important;
-    text-decoration: none;
-    font-size: var(--desc-fs-xs);
-    font-weight: normal;
-    margin-left: auto;
-    padding: 2px 4px;
-    border-radius: 3px;
-    transition: background-color 0.2s ease;
-}
-
-.task-edit-small:hover {
-    background-color: var(--tsk-gray-darker);
-    text-decoration: none;
-}
-
-/* ========================================
-   UTILITY CLASSES
-   ======================================== */
-
-.description > p.label {
-    font-size: var(--desc-fs-small);
-}
-
+/* Utility */
 .mb-0 {
     margin-bottom: 0;
 }
 
-/* ========================================
-   NOTIFICATION STYLES
-   ======================================== */
+/* Notifications */
 .task-notification {
     position: fixed;
     top: var(--gap-lg);
@@ -837,9 +772,7 @@ select#task_project {
     background: var(--status-error);
 }
 
-/* ========================================
-   SCROLLBAR STYLES
-   ======================================== */
+/* Scrollbar */
 .tasks-manager-container::-webkit-scrollbar {
     width: var(--scrollbar-width);
 }
@@ -857,15 +790,258 @@ select#task_project {
     background: #555;
 }
 
-/* ========================================
-   RESPONSIVE DESIGN
-   ======================================== */
+/* Modal Styles */
+.tasks-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    transition: background 0.3s;
+}
+
+.tasks-modal-content {
+    background: #181818;
+    margin: 10px;
+    padding: 24px 20px 20px 20px;
+    border: 1px solid #222;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+    color: #fff;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    animation: modalFadeIn 0.25s;
+}
+
+.tasks-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    color: var(--tsk-accent);
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    background: none;
+    border: none;
+    padding: 2px;
+    border-radius: 50%;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tasks-modal-close:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+
+h2.heading {
+    margin: 0 0 20px 0;
+    font-size: 1.4em;
+    color: var(--tsk-accent);
+}
+
+form#new-task-form, form.subtask-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+form#new-task-form p, form.subtask-form p {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+form#new-task-form label, form.subtask-form label {
+    margin-bottom: 6px;
+    color: #ccc;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+form#new-task-form input,
+form#new-task-form textarea,
+form.subtask-form input,
+form.subtask-form textarea {
+    padding: 10px 12px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+form#new-task-form input:focus,
+form#new-task-form textarea:focus,
+form.subtask-form input:focus,
+form.subtask-form textarea:focus {
+    outline: none;
+    border-color: var(--tsk-accent);
+    box-shadow: 0 0 0 2px rgba(89, 197, 145, 0.2);
+}
+
+.new-task-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.add-form-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+/* Flatpickr Date Picker */
+.flatpickr-calendar {
+    z-index: 9999 !important;
+    max-width: 100%;
+    background: #fff !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+    border: 1px solid #e6e6e6 !important;
+    border-radius: 6px !important;
+}
+
+.flatpickr-calendar.open {
+    z-index: 9999 !important;
+}
+
+.flatpickr-calendar.inline {
+    z-index: 9999 !important;
+}
+
+/* Fix positioning issues in modals */
+.tasks-modal .flatpickr-calendar,
+.tasks-datepicker {
+    position: fixed !important;
+    z-index: 10000 !important;
+}
+
+/* Ensure the calendar appears above everything */
+.flatpickr-calendar.tasks-datepicker {
+    z-index: 10001 !important;
+}
+
+#task_date,
+#task_start_date,
+#task_end_date {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #222;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+}
+
+#task_date:focus,
+#task_start_date:focus,
+#task_end_date:focus {
+    border-color: var(--tsk-accent);
+    outline: none;
+}
+
+/* Prevent modal from closing when clicking date picker */
+.flatpickr-calendar,
+.flatpickr-calendar *,
+.tasks-datepicker,
+.tasks-datepicker * {
+    pointer-events: auto !important;
+}
+
+.flatpickr-overlay {
+    z-index: 9998 !important;
+}
+
+/* Fix for calendar positioning */
+.flatpickr-calendar.arrowTop:before,
+.flatpickr-calendar.arrowTop:after {
+    z-index: 10002 !important;
+}
+
+/* Comments */
+.task-comments {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--tsk-gray-dark);
+}
+
+.task-comments h4 {
+    color: var(--tsk-blue);
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.comment {
+    background: var(--tsk-background-darker);
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--tsk-accent);
+}
+
+.comment-meta {
+    font-size: 0.85em;
+    color: var(--tsk-text-muted);
+    margin-bottom: 8px;
+}
+
+.comment-content {
+    color: var(--tsk-white);
+    line-height: 1.4;
+}
+
+.comment-form {
+    margin-top: 15px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid var(--tsk-gray-dark);
+    border-radius: 4px;
+    background: var(--tsk-gray-darker);
+    color: var(--tsk-white);
+    resize: vertical;
+}
+
+.comment-form button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: var(--tsk-accent);
+    color: var(--tsk-black);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.comment-form button:hover {
+    background: var(--tsk-accent-2);
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-    
     .task-actions {
         flex-direction: column;
     }
-    
     
     .subtask-actions {
         justify-content: flex-end;
