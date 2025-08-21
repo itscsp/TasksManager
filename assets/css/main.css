@@ -1135,11 +1135,10 @@ article.comment-body {
 
 .comment-content * {
     font-size: 14px;
-    color: var(--tsk-white);
+    color: var(--tsk-border-light) !important;
 }
 
 .comment-content a {
-    color: var(--tsk-accent);
     text-decoration: underline;
     text-decoration-color: var(--tsk-accent);
     text-underline-offset: 2px;
