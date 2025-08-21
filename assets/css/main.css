@@ -99,6 +99,75 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Motivational Quote Strip */
+.tasks-quote-strip {
+    background: linear-gradient(135deg, rgba(104, 211, 145, 0.15), rgba(104, 211, 145, 0.08));
+    border: 1px solid rgba(104, 211, 145, 0.2);
+    color: var(--tsk-white);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: calc(-1.5 * var(--gap-lg)) calc(-1.5 * var(--gap-lg)) var(--gap-lg) calc(-1.5 * var(--gap-lg));
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+}
+
+.tasks-quote-strip::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(104, 211, 145, 0.1), transparent);
+    animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.tasks-quote-text {
+    font-size: 18px;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.4;
+    margin: 0 0 var(--spacing-xs) 0;
+    position: relative;
+    z-index: 1;
+}
+
+.tasks-quote-text::before {
+    content: '"';
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 1;
+    margin-right: 4px;
+    color: var(--tsk-white);
+}
+
+.tasks-quote-text::after {
+    content: '"';
+    font-size: 24px;
+    font-weight: bold;
+    opacity: 1;
+    margin-left: 4px;
+     color: var(--tsk-white);
+
+}
+
+@media (max-width: 768px) {
+    .tasks-quote-text {
+        font-size: 16px;
+    }
+    
+    .tasks-quote-strip {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+}
+
 .tasks-login-required {
     background: var(--tsk-black);
     color: var(--tsk-white);

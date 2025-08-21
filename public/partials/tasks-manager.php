@@ -1,4 +1,9 @@
 <div class="tasks-manager-container">
+    <!-- Motivational Quote Strip -->
+    <div class="tasks-quote-strip">
+        <div class="tasks-quote-text" id="daily-quote">The way to get started is to quit talking and begin doing.</div>
+    </div>
+
     <div class="add-task-form">
         <h1 class="task-heading">Tasks</h1>
         <button id="open-add-task-modal" class="tasks-btn">Add Task</button>

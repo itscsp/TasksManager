@@ -395,4 +395,105 @@ jQuery(document).ready(function($) {
     updateDateAndCountdown();
     setInterval(updateDateAndCountdown, 1000);
 
+    // Motivational Quotes System
+    const motivationalQuotes = [
+        {
+            text: "The way to get started is to quit talking and begin doing.",
+            author: "Walt Disney"
+        },
+        {
+            text: "The future depends on what you do today.",
+            author: "Mahatma Gandhi"
+        },
+        {
+            text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+            author: "Winston Churchill"
+        },
+        {
+            text: "It does not matter how slowly you go as long as you do not stop.",
+            author: "Confucius"
+        },
+        {
+            text: "Everything you've ever wanted is on the other side of fear.",
+            author: "George Addair"
+        },
+        {
+            text: "Believe you can and you're halfway there.",
+            author: "Theodore Roosevelt"
+        },
+        {
+            text: "The only impossible journey is the one you never begin.",
+            author: "Tony Robbins"
+        },
+        {
+            text: "In the middle of difficulty lies opportunity.",
+            author: "Albert Einstein"
+        },
+        {
+            text: "A year from now you may wish you had started today.",
+            author: "Karen Lamb"
+        },
+        {
+            text: "The secret of getting ahead is getting started.",
+            author: "Mark Twain"
+        },
+        {
+            text: "Don't watch the clock; do what it does. Keep going.",
+            author: "Sam Levenson"
+        },
+        {
+            text: "The way to achieve your own success is to be willing to help somebody else get it first.",
+            author: "Iyanla Vanzant"
+        }
+    ];
+
+    function displayDailyQuote() {
+        // Get today's date as a seed for consistent daily quote
+        const today = new Date();
+        
+        // Better way to calculate day of year (1-365/366)
+        const start = new Date(today.getFullYear(), 0, 1);
+        const dayOfYear = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
+        
+        // Use day of year to select quote (ensures same quote all day)
+        const quoteIndex = (dayOfYear - 1) % motivationalQuotes.length;
+        const todaysQuote = motivationalQuotes[quoteIndex];
+        
+        // Debug info (remove this later)
+        console.log('Day of year:', dayOfYear, 'Quote index:', quoteIndex, 'Total quotes:', motivationalQuotes.length);
+        
+        // Update the quote with fade effect
+        const quoteText = $('#daily-quote');
+        
+        if (quoteText.length) {
+            // Check if quote is different before fading
+            if (quoteText.text() !== todaysQuote.text) {
+                quoteText.fadeOut(300, function() {
+                    $(this).text(todaysQuote.text).fadeIn(500);
+                });
+            } else {
+                // Just set the text without animation if it's the same
+                quoteText.text(todaysQuote.text);
+            }
+        }
+    }
+
+    // Display today's quote on page load
+    displayDailyQuote();
+
+    // Add click functionality to manually change quote (for testing)
+    $('.tasks-quote-strip').on('click', function() {
+        // Get a random quote for testing purposes
+        const randomIndex = Math.floor(Math.random() * motivationalQuotes.length);
+        const randomQuote = motivationalQuotes[randomIndex];
+        
+        const quoteText = $('#daily-quote');
+        
+        quoteText.fadeOut(200, function() {
+            $(this).text(randomQuote.text).fadeIn(400);
+        });
+        
+        console.log('Manual quote change - Index:', randomIndex, 'Quote:', randomQuote.text);
+    });
+
 });
