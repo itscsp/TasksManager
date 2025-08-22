@@ -25,8 +25,8 @@
             $is_future_task = (get_post_status() === 'future' || get_post_status() === 'private') && strtotime(get_the_date('Y-m-d')) > time();
             ?>
             <div class="task-meta">
-                <p style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                    <span style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <p class="task-meta-inner">
+                    <span>
                         <?php 
                         $project_terms = get_the_terms($task_id, 'project');
                         if ($project_terms && !is_wp_error($project_terms)): 
