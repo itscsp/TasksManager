@@ -11,7 +11,7 @@
  * Plugin Name: Tasks Manager
  * Plugin URI:  https://github.com/tasks-manager
  * Description: A plugin to manage daily tasks with projects and subtasks
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author:      Chethan S Poojary
  * Author URI:  https://chethanspoojary.com
  * Text Domain: tasks-manager
@@ -27,7 +27,7 @@ if (!defined('ABSPATH')) {
 /**
  * Define plugin constants
  */
-define('TASKS_VERSION', '1.2.0');
+define('TASKS_VERSION', '1.2.1');
 define('TASKS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('TASKS_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('TASKS_BASENAME', plugin_basename(__FILE__));
@@ -59,6 +59,16 @@ if (class_exists('Tasks_Meta_Boxes')) {
 require_once plugin_dir_path(__FILE__) . 'plugin-update-checker/plugin-update-checker.php';
 
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+// Initialize plugin update checker
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+    'https://github.com/itscsp/TasksManager',
+    __FILE__,
+    'tasks-manager'
+);
+
+// Set the branch that contains the stable release.
+$myUpdateChecker->setBranch('main');
 
 // No meta box code here anymore - it's been moved to admin/class-tasks-meta-boxes.php
 
