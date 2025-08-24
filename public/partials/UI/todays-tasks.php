@@ -32,6 +32,11 @@
                         'compare' => 'NOT EXISTS'
                     )
                 )
+            ),
+            'meta_key' => '_task_status',
+            'orderby' => array(
+                'meta_value' => 'DESC',
+                'date' => 'ASC'
             )
         );
         $today_tasks = new WP_Query($today_args);

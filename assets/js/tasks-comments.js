@@ -32,16 +32,16 @@ jQuery(document).ready(function($) {
                             <article class="comment-body">
                                 <div class="comment-meta">
                                     <div>
-                                    <img src="${response.data.avatar}" class="avatar" width="32" height="32" alt="">
-                                   </div>
+                                        <img src="${response.data.avatar}" class="avatar" width="32" height="32" alt="">
+                                    </div>
                                     <div>
-                                    <div class="comment-author">
-                                        ${response.data.author}
+                                        <div class="comment-author">
+                                            ${response.data.author}
+                                        </div>
+                                        <div class="comment-metadata">
+                                            <time>${response.data.date}</time>
+                                        </div>
                                     </div>
-                                    <div class="comment-metadata">
-                                        <time>${response.data.date}</time>
-                                    </div>
-                                     <div>
                                 </div>
                                 <div class="comment-content">
                                     ${response.data.content}

@@ -15,7 +15,30 @@
             </div>
             <h3 class="task-item-heading" style="margin: 0 8px 0 0; flex: 1; "><?php the_title(); ?></h3>
         </div>
-        <span class="accordion-icon" aria-hidden="true"></span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <?php
+            // Calculate days left
+            $end_date = get_post_meta($task_id, '_task_end_date', true);
+            if ($end_date) {
+                $today = new DateTime();
+                $end_date_obj = new DateTime($end_date);
+                $days_diff = $today->diff($end_date_obj)->days;
+                $is_overdue = $today > $end_date_obj;
+                
+                if ($is_overdue) {
+                    echo '<span class="days-left-label overdue">';
+                    echo $days_diff === 0 ? 'Due Today' : $days_diff . ' days overdue';
+                    echo '</span>';
+                } else {
+                    $label_class = $days_diff <= 1 ? 'urgent' : ($days_diff <= 3 ? 'warning' : 'normal');
+                    echo '<span class="days-left-label ' . $label_class . '">';
+                    echo $days_diff === 0 ? 'Due Today' : $days_diff . ' days left';
+                    echo '</span>';
+                }
+            }
+            ?>
+            <span class="accordion-icon" aria-hidden="true"></span>
+        </div>
     </div>
     <div class="inner-container accordion-content" style="display: none;">
         <div class="task-content">

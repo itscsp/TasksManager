@@ -22,7 +22,7 @@
   --status-todo: #ff6b35;
   --status-completed: var(--tsk-accent);
   --status-progress: #ffc107;
-  --status-error: #dc3545;
+  --status-error: hsl(0deg 71% 59%);
 
   /* Typography */
   --heading-fs: 20px;
@@ -378,6 +378,14 @@ h3.task-item-heading {
   transition: var(--transition);
   position: relative;
 }
+.archives-accordion-item .task-item[data-status='todo']{
+  border: 1px solid var(--status-error);
+}
+
+.archives-accordion-item .task-item[data-status='todo'] .custom-checkbox-box {
+  border: 1px solid var(--status-error) !important;
+}
+
 
 .task-item.no-tasks {
   padding: var(--gap-lg);
@@ -391,6 +399,34 @@ h3.task-item-heading {
 .task-item.focused {
   border-color: var(--tsk-blue);
   box-shadow: 0 0 var(--gap) rgba(0, 170, 255, 0.2);
+}
+
+/* Days Left Labels */
+.days-left-label {
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--tsk-white);
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 1.2;
+}
+
+.days-left-label.urgent {
+  background: var(--status-progress);
+}
+
+.days-left-label.warning {
+  background: var(--status-progress);
+}
+
+.days-left-label.normal {
+  background: var(--tsk-accent-2);
+}
+
+.days-left-label.overdue {
+  background: var(--status-error);
 }
 
 .task-item-heading-outer {
@@ -571,7 +607,7 @@ p.tsk-projects {
 }
 
 select#task_project {
-  background: transparent;
+  background: var(--tsk-black);
   color: var(--tsk-white);
   padding: var(--gap);
   border: 1px solid var(--tsk-accent);
@@ -655,7 +691,6 @@ select#task_project {
   border-radius: 4px;
   line-height: 1.2;
   padding: 8px 16px;
-  margin-top: 10px;
   height: auto !important;
   cursor: pointer;
   transition: var(--transition-fast);
@@ -772,6 +807,7 @@ select#task_project {
   justify-content: space-between;
   gap: var(--gap-lg);
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .subtask-header > h4 {
@@ -1269,5 +1305,17 @@ article.comment-body {
   .tasks-modal-content {
     padding: 15px;
     border-radius: 8px;
-}
+  }
+
+  /* Days Left Labels - Mobile: Show as colored dots */
+  .days-left-label {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 0;
+    min-width: 10px;
+    display: inline-block;
+    vertical-align: middle;
+  }
 }

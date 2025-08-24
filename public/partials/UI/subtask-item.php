@@ -7,7 +7,7 @@
                           <div class="subtask-content">
                               <strong><?php echo esc_html($subtask['title']); ?></strong>
                               <?php if (!empty($subtask['description'])) : ?>
-                                  <p><?php echo esc_html($subtask['description']); ?></p>
+                                  <p><?php echo nl2br(esc_html($subtask['description'])); ?></p>
                               <?php endif; ?>
                               <div class="subtask-actions-container">
                                   <small>Status: <span class="task-status <?php echo $subtask['status']; ?>"><?php echo ucfirst(str_replace('-', ' ', $subtask['status'])); ?></span></small>
